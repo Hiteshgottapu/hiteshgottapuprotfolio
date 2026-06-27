@@ -84,6 +84,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Building production AI systems, LLM infrastructure, and enterprise AI applications." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Hitesh Gottapu — AI Systems Engineer" },
+      { name: "twitter:description", content: "Building production AI systems, LLM infrastructure, and enterprise AI applications." },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
