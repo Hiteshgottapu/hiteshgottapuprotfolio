@@ -242,8 +242,8 @@ function AICore() {
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[var(--neon-blue)]/30 via-transparent to-[var(--neon-violet)]/30" />
         <div className="relative flex h-full w-full flex-col items-center justify-center gap-2">
           <Cpu className="h-10 w-10 text-[var(--neon-cyan)]" />
-          <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">AI Core</div>
-          <div className="text-xs font-mono text-[var(--neon-cyan)]">v2.4.1</div>
+          <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">AI Systems</div>
+          <div className="text-xs font-mono text-[var(--neon-cyan)]">production</div>
         </div>
         {/* corner pins */}
         {["top-0 left-0", "top-0 right-0", "bottom-0 left-0", "bottom-0 right-0"].map(p => (
@@ -251,31 +251,36 @@ function AICore() {
         ))}
       </div>
 
-      {/* floating holo panels */}
+      {/* floating status indicators */}
       <motion.div
         animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -left-6 top-10 w-44 rounded-xl glass p-3 text-xs"
+        className="absolute -left-6 top-10 rounded-xl glass px-3 py-2 text-[11px] font-mono"
       >
-        <div className="flex items-center justify-between text-muted-foreground">
-          <span className="font-mono">inference.latency</span>
-          <span className="text-[var(--neon-cyan)]">42ms</span>
-        </div>
-        <div className="mt-2 h-1.5 w-full rounded-full bg-white/5">
-          <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-cyan)]" />
-        </div>
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--neon-cyan)] glow-cyan mr-2" />
+        <span className="text-foreground">Production Ready</span>
       </motion.div>
       <motion.div
         animate={{ y: [0, 10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-4 bottom-12 w-48 rounded-xl glass p-3 text-xs font-mono"
+        className="absolute -right-4 bottom-12 w-44 rounded-xl glass p-3 text-[11px] font-mono space-y-1.5"
       >
-        <div className="text-muted-foreground">tokens/sec</div>
-        <div className="mt-1 text-2xl font-semibold text-gradient-primary">12,480</div>
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-cyan)]" />
+          <span className="text-muted-foreground">FastAPI Services</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-violet)]" />
+          <span className="text-muted-foreground">LLM Pipelines</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-blue)]" />
+          <span className="text-muted-foreground">Research Published</span>
+        </div>
       </motion.div>
       <motion.div
         animate={{ y: [0, -8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -right-8 top-4 rounded-xl glass px-3 py-2 text-[10px] font-mono text-[var(--neon-violet)]"
       >
-        ● GPU 87%
+        ● Systems Online
       </motion.div>
     </div>
   );
