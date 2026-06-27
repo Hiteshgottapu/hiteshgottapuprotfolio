@@ -295,8 +295,8 @@ function Hero() {
   const metrics = [
     { label: "Production AI Systems", value: "4" },
     { label: "Hackathon Winner", value: "5×" },
-    { label: "Research Publication", value: "1" },
-    { label: "AI Engineering", value: "Enterprise" },
+    { label: "Published Research", value: "ICAML 2025" },
+    { label: "AI & Data Science", value: "Internships" },
   ];
 
   return (
