@@ -586,6 +586,53 @@ function Projects() {
 }
 
 /* ============================================================================
+ * ENGINEERING PRINCIPLES
+ * ========================================================================== */
+function Principles() {
+  const cards = [
+    {
+      title: "Reliability", icon: Shield, accent: "#22D3EE",
+      desc: "Systems built with input validation, schema enforcement, graceful failure handling, and deterministic checks before model output reaches users.",
+    },
+    {
+      title: "Scalability", icon: Network, accent: "#3B82F6",
+      desc: "Async APIs, modular service boundaries, cloud-native deployment, and reusable components designed to grow with usage.",
+    },
+    {
+      title: "Observability", icon: FlaskConical, accent: "#8B5CF6",
+      desc: "Evaluation pipelines, structured logging, monitoring hooks, and reproducible runs so system behavior stays measurable over time.",
+    },
+  ];
+  return (
+    <Section id="principles">
+      <SectionLabel icon={Sparkles}>Engineering Principles</SectionLabel>
+      <SectionHeading>How I build for<br />production.</SectionHeading>
+      <div className="mt-16 grid gap-6 md:grid-cols-3">
+        {cards.map((c, i) => (
+          <motion.div
+            key={c.title}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -6 }}
+            className="group relative overflow-hidden rounded-3xl glass-strong p-7"
+          >
+            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-30 blur-3xl transition-opacity group-hover:opacity-60"
+              style={{ background: c.accent }} />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl glass">
+              <c.icon className="h-6 w-6" style={{ color: c.accent }} />
+            </div>
+            <h3 className="mt-5 text-xl font-semibold">{c.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
+          </motion.div>
+        ))}
+      </div>
+    </Section>
+  );
+}
+
+/* ============================================================================
  * ARCHITECTURE showcase
  * ========================================================================== */
 function Architecture() {
