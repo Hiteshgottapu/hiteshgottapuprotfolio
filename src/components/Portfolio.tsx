@@ -120,6 +120,7 @@ function Nav() {
   const links = [
     { href: "#about", label: "About" },
     { href: "#projects", label: "Projects" },
+    { href: "#principles", label: "Principles" },
     { href: "#architecture", label: "Architecture" },
     { href: "#skills", label: "Skills" },
     { href: "#experience", label: "Experience" },
@@ -242,8 +243,8 @@ function AICore() {
         <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[var(--neon-blue)]/30 via-transparent to-[var(--neon-violet)]/30" />
         <div className="relative flex h-full w-full flex-col items-center justify-center gap-2">
           <Cpu className="h-10 w-10 text-[var(--neon-cyan)]" />
-          <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">AI Core</div>
-          <div className="text-xs font-mono text-[var(--neon-cyan)]">v2.4.1</div>
+          <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">AI Systems</div>
+          <div className="text-xs font-mono text-[var(--neon-cyan)]">production</div>
         </div>
         {/* corner pins */}
         {["top-0 left-0", "top-0 right-0", "bottom-0 left-0", "bottom-0 right-0"].map(p => (
@@ -251,31 +252,36 @@ function AICore() {
         ))}
       </div>
 
-      {/* floating holo panels */}
+      {/* floating status indicators */}
       <motion.div
         animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -left-6 top-10 w-44 rounded-xl glass p-3 text-xs"
+        className="absolute -left-6 top-10 rounded-xl glass px-3 py-2 text-[11px] font-mono"
       >
-        <div className="flex items-center justify-between text-muted-foreground">
-          <span className="font-mono">inference.latency</span>
-          <span className="text-[var(--neon-cyan)]">42ms</span>
-        </div>
-        <div className="mt-2 h-1.5 w-full rounded-full bg-white/5">
-          <div className="h-full w-3/4 rounded-full bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-cyan)]" />
-        </div>
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--neon-cyan)] glow-cyan mr-2" />
+        <span className="text-foreground">Production Ready</span>
       </motion.div>
       <motion.div
         animate={{ y: [0, 10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-4 bottom-12 w-48 rounded-xl glass p-3 text-xs font-mono"
+        className="absolute -right-4 bottom-12 w-44 rounded-xl glass p-3 text-[11px] font-mono space-y-1.5"
       >
-        <div className="text-muted-foreground">tokens/sec</div>
-        <div className="mt-1 text-2xl font-semibold text-gradient-primary">12,480</div>
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-cyan)]" />
+          <span className="text-muted-foreground">FastAPI Services</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-violet)]" />
+          <span className="text-muted-foreground">LLM Pipelines</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-blue)]" />
+          <span className="text-muted-foreground">Research Published</span>
+        </div>
       </motion.div>
       <motion.div
         animate={{ y: [0, -8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -right-8 top-4 rounded-xl glass px-3 py-2 text-[10px] font-mono text-[var(--neon-violet)]"
       >
-        ● GPU 87%
+        ● Systems Online
       </motion.div>
     </div>
   );
@@ -290,8 +296,8 @@ function Hero() {
   const metrics = [
     { label: "Production AI Systems", value: "4" },
     { label: "Hackathon Winner", value: "5×" },
-    { label: "Research Publication", value: "1" },
-    { label: "AI Engineering", value: "Enterprise" },
+    { label: "Published Research", value: "ICAML 2025" },
+    { label: "AI & Data Science", value: "Internships" },
   ];
 
   return (
@@ -330,7 +336,7 @@ function Hero() {
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.35 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
           >
-            Building production AI systems, enterprise data platforms, backend infrastructure, and Large Language Model applications.
+            Production AI systems · Backend engineering · Enterprise data engineering · LLM applications · AI infrastructure.
           </motion.p>
 
           <motion.div
@@ -394,8 +400,8 @@ function About() {
   const items = [
     { year: "ICAML 2025", title: "Published Research", subtitle: "Peer-reviewed paper on applied AI systems.", icon: FlaskConical },
     { year: "5×", title: "Hackathon Winner", subtitle: "Applied AI under tight constraints and shipping pressure.", icon: Award },
-    { year: "Now", title: "NeuzenAI", subtitle: "Production AI pipelines, LLM evaluation, schema validation, FastAPI, inference optimization.", icon: Brain },
-    { year: "Past", title: "Megaminds IT Services", subtitle: "Machine Learning, NER, FastAPI, Fraud Detection, Python, SQL.", icon: Database },
+    { year: "Now", title: "NeuzenAI — AI / Data Science Engineer Intern", subtitle: "Production AI pipelines, LLM evaluation, schema validation, FastAPI services, inference optimization.", icon: Brain },
+    { year: "Past", title: "Megaminds IT Services — Data Science Developer Intern", subtitle: "ML, NER, FastAPI, fraud detection workflows, Python, SQL.", icon: Database },
     { year: "Edu", title: "B.Tech — AI & Data Science", subtitle: "Foundations across ML, systems, and data engineering.", icon: Code2 },
   ];
   return (
@@ -533,33 +539,33 @@ function Projects() {
     {
       name: "FluxAI", tagline: "Enterprise Marketing Intelligence Platform", icon: Workflow,
       stack: ["OAuth 2.0", "FastAPI", "AWS", "Snowflake", "Medallion", "Multi-tenant"],
-      description: "Unified marketing data platform with LLM-driven insights across paid, organic, and CRM sources, built on a medallion architecture.",
-      challenges: "Multi-tenant ingestion with strict isolation, schema drift handling, and a clean bronze→silver→gold lineage.",
-      results: "Production AI pipelines serving enterprise marketing workflows end-to-end.",
+      description: "Multi-tenant data engineering platform unifying paid, organic, and CRM sources into AI-ready datasets on a medallion architecture, with OAuth 2.0 secured ingestion and FastAPI services.",
+      challenges: "Multi-tenant ingestion with strict isolation, schema drift handling, and a clean bronze → silver → gold lineage.",
+      results: "Backend + data engineering platform exposing governed, AI-ready datasets through FastAPI APIs.",
       accent: "#3B82F6",
     },
     {
       name: "Brahmo", tagline: "Legal AI Safety Engine", icon: Shield,
-      stack: ["RAG", "Citation Verification", "AI Safety", "FastAPI", "PostgreSQL", "pgvector"],
+      stack: ["FastAPI", "pgvector", "RAG", "Citation Verification", "AI Safety", "Dual-loop"],
       description: "Dual-loop architecture pairing retrieval with a deterministic verifier that grounds every legal claim before it leaves the model.",
-      challenges: "Designing a non-LLM verification loop that catches hallucinated citations without sacrificing response quality.",
-      results: "Deterministic citation verification with grounded refusals when sources do not support the claim.",
+      challenges: "Designing a non-LLM verification loop that catches unsupported citations without sacrificing response quality.",
+      results: "Designed to minimize hallucinations through deterministic validation, with grounded refusals when sources do not support the claim.",
       accent: "#8B5CF6",
     },
     {
       name: "MedScript", tagline: "Healthcare AI Platform", icon: FlaskConical,
-      stack: ["OCR", "Computer Vision", "Clinical NER", "Gemini", "FastAPI", "Patient UX"],
-      description: "Prescription understanding pipeline that turns handwritten scripts into structured, patient-friendly guidance.",
-      challenges: "Robust OCR on noisy clinical scans, drug-name disambiguation, and safe routing of model outputs.",
-      results: "End-to-end clinical workflow from image upload to structured patient response.",
+      stack: ["OCR", "Clinical NER", "Vector Search", "Gemini", "FastAPI", "Patient UX"],
+      description: "Prescription image → OCR → clinical entity extraction → structured medical records → vector search → LLM → patient-friendly response. A full production pipeline, not a single model call.",
+      challenges: "Robust OCR on noisy clinical scans, drug-name disambiguation, structured record extraction, and safe routing of model outputs.",
+      results: "End-to-end clinical workflow from image upload to structured, patient-friendly guidance.",
       accent: "#22D3EE",
     },
     {
       name: "QLoRA Fine-Tuning", tagline: "LLM Engineering", icon: Zap,
-      stack: ["Qwen2.5", "QLoRA", "PEFT", "BitsAndBytes", "Transformers", "Eval"],
-      description: "Fine-tuning workflow for Qwen2.5 with 4-bit quantization, parameter-efficient adapters, and structured evaluation.",
-      challenges: "Memory-efficient training on commodity GPUs and disciplined evaluation across capability and safety axes.",
-      results: "Reproducible QLoRA pipeline with adapter checkpoints, training telemetry, and a model evaluation harness.",
+      stack: ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "CodeAlpaca", "Eval Pipeline"],
+      description: "Parameter-efficient fine-tuning of Qwen2.5 on CodeAlpaca with 4-bit NF4 quantization, PEFT adapters, and a structured evaluation pipeline.",
+      challenges: "Memory-efficient training on commodity GPUs and disciplined evaluation across capability and regression axes.",
+      results: "0.28% trainable parameters · 4-bit NF4 quantization · reproducible PEFT pipeline with eval harness.",
       accent: "#3B82F6",
     },
   ];
@@ -575,6 +581,53 @@ function Projects() {
       </div>
       <div className="mt-16 grid gap-6 md:grid-cols-2">
         {projects.map((p, i) => <ProjectCard key={p.name} p={p} i={i} />)}
+      </div>
+    </Section>
+  );
+}
+
+/* ============================================================================
+ * ENGINEERING PRINCIPLES
+ * ========================================================================== */
+function Principles() {
+  const cards = [
+    {
+      title: "Reliability", icon: Shield, accent: "#22D3EE",
+      desc: "Systems built with input validation, schema enforcement, graceful failure handling, and deterministic checks before model output reaches users.",
+    },
+    {
+      title: "Scalability", icon: Network, accent: "#3B82F6",
+      desc: "Async APIs, modular service boundaries, cloud-native deployment, and reusable components designed to grow with usage.",
+    },
+    {
+      title: "Observability", icon: FlaskConical, accent: "#8B5CF6",
+      desc: "Evaluation pipelines, structured logging, monitoring hooks, and reproducible runs so system behavior stays measurable over time.",
+    },
+  ];
+  return (
+    <Section id="principles">
+      <SectionLabel icon={Sparkles}>Engineering Principles</SectionLabel>
+      <SectionHeading>How I build for<br />production.</SectionHeading>
+      <div className="mt-16 grid gap-6 md:grid-cols-3">
+        {cards.map((c, i) => (
+          <motion.div
+            key={c.title}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ y: -6 }}
+            className="group relative overflow-hidden rounded-3xl glass-strong p-7"
+          >
+            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-30 blur-3xl transition-opacity group-hover:opacity-60"
+              style={{ background: c.accent }} />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl glass">
+              <c.icon className="h-6 w-6" style={{ color: c.accent }} />
+            </div>
+            <h3 className="mt-5 text-xl font-semibold">{c.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
+          </motion.div>
+        ))}
       </div>
     </Section>
   );
@@ -732,16 +785,16 @@ function Experience() {
   const roles = [
     {
       co: "NeuzenAI",
-      role: "AI Engineering",
+      role: "AI / Data Science Engineer Intern",
       date: "Internship",
-      impact: "Worked on production AI pipelines, LLM evaluation, schema validation, and inference optimization with FastAPI services.",
+      impact: "Production AI pipelines, LLM evaluation, schema validation, FastAPI services, and inference optimization for shipping AI features.",
       tech: ["FastAPI", "LLM Evaluation", "Schema Validation", "Inference Optimization", "Python"],
     },
     {
       co: "Megaminds IT Services",
-      role: "Machine Learning",
+      role: "Data Science Developer Intern",
       date: "Internship",
-      impact: "Built ML components for fraud detection, including NER, model integration, and data workflows behind FastAPI endpoints.",
+      impact: "ML components for fraud detection, NER pipelines, and data workflows served behind FastAPI endpoints.",
       tech: ["Machine Learning", "NER", "Fraud Detection", "FastAPI", "Python", "SQL"],
     },
   ];
@@ -770,7 +823,8 @@ function Experience() {
                 <Cpu className="h-4 w-4 text-[var(--neon-cyan)]" />
               </div>
             </div>
-            <p className="mt-4 text-sm leading-relaxed">{r.impact}</p>
+            <div className="mt-4 text-[10px] uppercase tracking-widest text-[var(--neon-cyan)]">Key Contributions</div>
+            <p className="mt-1 text-sm leading-relaxed">{r.impact}</p>
             <div className="mt-4 flex flex-wrap gap-1.5">
               {r.tech.map(t => (
                 <span key={t} className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] font-mono text-muted-foreground">{t}</span>
@@ -913,20 +967,12 @@ function Research() {
  * CONTACT - terminal
  * ========================================================================== */
 function Contact() {
-  const lines = [
-    { p: "$", t: "initialize_contact --user=hitesh" },
-    { p: ">", t: "establishing secure channel..." },
-    { p: ">", t: "channel ready ✓" },
-    { p: "$", t: "connect --target=hitesh.gottapu" },
-    { p: ">", t: "handshake complete" },
-    { p: "$", t: "deploy --intent=collaborate" },
-  ];
-  const endpoints = [
-    { k: "email", v: "hitesh@gottapu.ai", icon: Mail, href: "mailto:hitesh@gottapu.ai" },
-    { k: "github", v: "github.com/hiteshgottapu", icon: Github, href: "https://github.com/hiteshgottapu" },
-    { k: "linkedin", v: "linkedin.com/in/hiteshgottapu", icon: Linkedin, href: "https://linkedin.com/in/hiteshgottapu" },
-    { k: "resume", v: "resume.pdf", icon: FileDown, href: "#" },
-    { k: "portfolio", v: "hiteshgottapu.dev", icon: ExternalLink, href: "#" },
+  const commands = [
+    { cmd: "connect", desc: "open secure email channel", href: "mailto:hitesh@gottapu.ai" },
+    { cmd: "download_resume", desc: "fetch latest resume.pdf", href: "#" },
+    { cmd: "view_github", desc: "browse repositories", href: "https://github.com/hiteshgottapu" },
+    { cmd: "open_linkedin", desc: "open professional profile", href: "https://linkedin.com/in/hiteshgottapu" },
+    { cmd: "email", desc: "compose direct message", href: "mailto:hitesh@gottapu.ai" },
   ];
   return (
     <Section id="contact">
@@ -945,36 +991,33 @@ function Contact() {
           <span className="ml-3 text-xs font-mono text-muted-foreground">hitesh@aicore — bash</span>
         </div>
         <div className="p-8 font-mono text-sm">
-          {lines.map((l, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.4, duration: 0.4 }}
-              className="flex gap-3"
-            >
-              <span className="text-[var(--neon-violet)]">{l.p}</span>
-              <span className={l.p === "$" ? "text-foreground" : "text-muted-foreground"}>{l.t}</span>
-            </motion.div>
-          ))}
-          <motion.div
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ delay: lines.length * 0.4 + 0.2 }}
-            className="mt-6 grid gap-3 md:grid-cols-2"
-          >
-            {endpoints.map(e => (
-              <a key={e.k} href={e.href}
-                className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-[var(--neon-cyan)]/40 hover:bg-[var(--neon-cyan)]/5">
-                <div className="flex items-center gap-3">
-                  <e.icon className="h-4 w-4 text-[var(--neon-cyan)]" />
-                  <div>
-                    <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{e.k}</div>
-                    <div className="text-xs text-foreground">{e.v}</div>
-                  </div>
+          <div className="text-muted-foreground mb-4">
+            <span className="text-[var(--neon-violet)]">$</span> help
+            <div className="pl-4 text-xs mt-1">available commands — click to execute</div>
+          </div>
+          <div className="grid gap-2 md:grid-cols-2">
+            {commands.map((c, i) => (
+              <motion.a
+                key={c.cmd}
+                href={c.href}
+                target={c.href.startsWith("http") ? "_blank" : undefined}
+                rel="noreferrer"
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                whileHover={{ x: 4 }}
+                className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 transition-all hover:border-[var(--neon-cyan)]/40 hover:bg-[var(--neon-cyan)]/5"
+              >
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[var(--neon-violet)]">$</span>
+                  <span className="text-foreground">{c.cmd}</span>
+                  <span className="text-[10px] text-muted-foreground hidden md:inline">— {c.desc}</span>
                 </div>
                 <ArrowRight className="h-4 w-4 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-[var(--neon-cyan)]" />
-              </a>
+              </motion.a>
             ))}
-          </motion.div>
+          </div>
           <div className="mt-6 flex gap-2">
             <span className="text-[var(--neon-violet)]">$</span>
             <span className="text-foreground">_</span>
@@ -1028,6 +1071,7 @@ export default function Portfolio() {
       <Hero />
       <About />
       <Projects />
+      <Principles />
       <Architecture />
       <Skills />
       <Experience />
