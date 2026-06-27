@@ -94,7 +94,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" },
+      // Non-render-blocking font load: fetched as a stylesheet only for `print`,
+      // then promoted to `all` once loaded so initial render is not blocked.
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap",
+        media: "print",
+        onLoad: "this.media='all'",
+      },
+    ],
+    scripts: [
+      // Fallback for browsers without JS / where the inline onLoad is stripped.
+      {
+        children:
+          "document.querySelectorAll('link[rel=\"stylesheet\"][media=\"print\"]').forEach(function(l){l.media='all';});",
+      },
+    ],
     ],
   }),
   shellComponent: RootShell,
