@@ -120,6 +120,7 @@ function Nav() {
   const links = [
     { href: "#about", label: "About" },
     { href: "#projects", label: "Projects" },
+    { href: "#principles", label: "Principles" },
     { href: "#architecture", label: "Architecture" },
     { href: "#skills", label: "Skills" },
     { href: "#experience", label: "Experience" },
