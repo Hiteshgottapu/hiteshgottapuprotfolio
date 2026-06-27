@@ -350,7 +350,7 @@ function Hero() {
             <MagneticButton href="#projects" variant="primary">
               View Projects <ArrowRight className="h-4 w-4" />
             </MagneticButton>
-            <MagneticButton href="#" variant="ghost">
+            <MagneticButton href="https://drive.google.com/file/d/1MkXXSoB_9CBG_1rlrRhZ_HNc79EQJxEa/view?usp=sharing" variant="ghost" target="_blank" rel="noreferrer">
               <FileDown className="h-4 w-4" /> Resume
             </MagneticButton>
             <MagneticButton href="https://github.com/Hiteshgottapu" variant="ghost">
@@ -1023,11 +1023,12 @@ function Research() {
  * ========================================================================== */
 function Contact() {
   const commands = [
-    { cmd: "connect", desc: "open secure email channel", href: "mailto:hitesh@gottapu.ai" },
-    { cmd: "download_resume", desc: "fetch latest resume.pdf", href: "#" },
+    { cmd: "connect", desc: "open secure email channel", href: "mailto:hiteshgottapu@gmail.com" },
+    { cmd: "download_resume", desc: "fetch latest resume.pdf", href: "https://drive.google.com/file/d/1MkXXSoB_9CBG_1rlrRhZ_HNc79EQJxEa/view?usp=sharing" },
     { cmd: "view_github", desc: "browse repositories", href: "https://github.com/Hiteshgottapu" },
     { cmd: "open_linkedin", desc: "open professional profile", href: "https://www.linkedin.com/in/hitesh-gottapu/" },
-    { cmd: "email", desc: "compose direct message", href: "mailto:hitesh@gottapu.ai" },
+    { cmd: "whatsapp", desc: "message on WhatsApp", href: "https://wa.me/918143506309" },
+    { cmd: "email", desc: "compose direct message", href: "mailto:hiteshgottapu@gmail.com" },
   ];
   return (
     <Section id="contact">
@@ -1110,8 +1111,11 @@ function Footer() {
           <a href="https://www.linkedin.com/in/hitesh-gottapu/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
             <Linkedin className="h-4 w-4" />
           </a>
-          <a href="mailto:hitesh@example.com" aria-label="Email Hitesh" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
+          <a href="mailto:hiteshgottapu@gmail.com" aria-label="Email Hitesh" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
             <Mail className="h-4 w-4" />
+          </a>
+          <a href="https://wa.me/918143506309" target="_blank" rel="noreferrer" aria-label="WhatsApp Hitesh" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           </a>
         </div>
       </div>
