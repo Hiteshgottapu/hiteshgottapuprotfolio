@@ -288,11 +288,10 @@ function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   const metrics = [
-    { label: "Production Systems", value: "12+" },
-    { label: "AI Projects", value: "20+" },
-    { label: "Research Publications", value: "1" },
-    { label: "Hackathons", value: "8" },
-    { label: "Internships", value: "4" },
+    { label: "Production AI Systems", value: "4" },
+    { label: "Hackathon Winner", value: "5×" },
+    { label: "Research Publication", value: "1" },
+    { label: "AI Engineering", value: "Enterprise" },
   ];
 
   return (
@@ -308,7 +307,7 @@ function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--neon-cyan)] opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--neon-cyan)]" />
             </span>
-            Available for production AI roles
+            Hyderabad, India · Available for AI Engineering roles
           </motion.div>
 
           <motion.h1
@@ -324,14 +323,14 @@ function Hero() {
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25 }}
             className="mt-3 text-xl font-medium text-foreground/90 md:text-2xl"
           >
-            AI Systems Engineer
+            AI Engineer
           </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.35 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
           >
-            Building production AI systems, LLM infrastructure, data engineering, AI safety, and enterprise AI applications.
+            Building production AI systems, enterprise data platforms, backend infrastructure, and Large Language Model applications.
           </motion.p>
 
           <motion.div
@@ -342,7 +341,13 @@ function Hero() {
               View Projects <ArrowRight className="h-4 w-4" />
             </MagneticButton>
             <MagneticButton href="#" variant="ghost">
-              <FileDown className="h-4 w-4" /> Download Resume
+              <FileDown className="h-4 w-4" /> Resume
+            </MagneticButton>
+            <MagneticButton href="https://github.com/hiteshgottapu" variant="ghost">
+              <Github className="h-4 w-4" /> GitHub
+            </MagneticButton>
+            <MagneticButton href="https://linkedin.com/in/hiteshgottapu" variant="ghost">
+              <Linkedin className="h-4 w-4" /> LinkedIn
             </MagneticButton>
             <MagneticButton href="#contact" variant="accent">
               Hire Me
@@ -351,7 +356,7 @@ function Hero() {
 
           <motion.div
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-5"
+            className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-4"
           >
             {metrics.map(m => (
               <div key={m.label} className="rounded-2xl glass p-4">
