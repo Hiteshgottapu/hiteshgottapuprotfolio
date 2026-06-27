@@ -574,7 +574,7 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
 function Projects() {
   const projects: Project[] = [
     {
-      name: "FluxAI", tagline: "Enterprise Marketing Intelligence Platform", icon: Workflow,
+      name: "FluxAI", tagline: "Enterprise Marketing Intelligence Platform · Built at NeuzenAI", icon: Workflow,
       stack: ["OAuth 2.0", "FastAPI", "AWS", "Snowflake", "Medallion", "Multi-tenant"],
       description: "Multi-tenant data engineering platform unifying paid, organic, and CRM sources into AI-ready datasets on a medallion architecture, with OAuth 2.0 secured ingestion and FastAPI services.",
       challenges: "Multi-tenant ingestion with strict isolation, schema drift handling, and a clean bronze → silver → gold lineage.",
@@ -840,8 +840,8 @@ function Experience() {
       co: "NeuzenAI",
       role: "AI / Data Science Engineer Intern",
       date: "Internship",
-      impact: "Production AI pipelines, LLM evaluation, schema validation, FastAPI services, and inference optimization for shipping AI features.",
-      tech: ["FastAPI", "LLM Evaluation", "Schema Validation", "Inference Optimization", "Python"],
+      impact: "Built and shipped FluxAI — an enterprise marketing intelligence platform with multi-tenant data pipelines, OAuth 2.0 secured ingestion, medallion architecture, and FastAPI services serving AI-ready datasets.",
+      tech: ["FastAPI", "OAuth 2.0", "Snowflake", "AWS", "Medallion Architecture", "Python"],
     },
     {
       co: "Megaminds IT Services",
