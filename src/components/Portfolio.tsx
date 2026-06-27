@@ -496,8 +496,8 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
             <p.icon className="h-7 w-7" style={{ color: p.accent }} />
           </div>
           <div className="flex gap-2 opacity-60 transition-opacity group-hover:opacity-100">
-            <a href="#" className="rounded-full glass p-2"><Github className="h-4 w-4" /></a>
-            <a href="#" className="rounded-full glass p-2"><ExternalLink className="h-4 w-4" /></a>
+            <a href="#" aria-label={`${p.name} source on GitHub`} className="rounded-full glass p-2"><Github className="h-4 w-4" /></a>
+            <a href="#" aria-label={`${p.name} live demo`} className="rounded-full glass p-2"><ExternalLink className="h-4 w-4" /></a>
           </div>
         </div>
 
@@ -1049,8 +1049,8 @@ function Footer() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {[Github, Linkedin, Mail].map((I, i) => (
-            <a key={i} href="#" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
+          {([[Github, "GitHub"], [Linkedin, "LinkedIn"], [Mail, "Email"]] as const).map(([I, label], i) => (
+            <a key={i} href="#" aria-label={label} className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
               <I className="h-4 w-4" />
             </a>
           ))}
