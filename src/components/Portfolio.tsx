@@ -532,34 +532,34 @@ function Projects() {
   const projects: Project[] = [
     {
       name: "FluxAI", tagline: "Enterprise Marketing Intelligence Platform", icon: Workflow,
-      stack: ["OAuth", "FastAPI", "AWS", "Medallion", "dbt", "Snowflake"],
-      description: "Unified marketing data platform with LLM-driven insights across paid, organic, and CRM sources.",
-      challenges: "Multi-tenant ingestion with strict isolation, schema drift, and sub-second analytics.",
-      results: "Reduced report time from 6h → 90s. Powers 40+ client dashboards.",
+      stack: ["OAuth 2.0", "FastAPI", "AWS", "Snowflake", "Medallion", "Multi-tenant"],
+      description: "Unified marketing data platform with LLM-driven insights across paid, organic, and CRM sources, built on a medallion architecture.",
+      challenges: "Multi-tenant ingestion with strict isolation, schema drift handling, and a clean bronze→silver→gold lineage.",
+      results: "Production AI pipelines serving enterprise marketing workflows end-to-end.",
       accent: "#3B82F6",
     },
     {
       name: "Brahmo", tagline: "Legal AI Safety Engine", icon: Shield,
-      stack: ["Safety Engine", "Citation Validation", "RAG", "FastAPI", "Pinecone"],
-      description: "Dual-loop architecture combining retrieval with a verifier that grounds every claim to a statute.",
-      challenges: "Eliminating hallucinated citations and modeling jurisdictional context.",
-      results: "98.4% citation accuracy on benchmarks vs 71% for vanilla RAG.",
+      stack: ["RAG", "Citation Verification", "AI Safety", "FastAPI", "PostgreSQL", "pgvector"],
+      description: "Dual-loop architecture pairing retrieval with a deterministic verifier that grounds every legal claim before it leaves the model.",
+      challenges: "Designing a non-LLM verification loop that catches hallucinated citations without sacrificing response quality.",
+      results: "Deterministic citation verification with grounded refusals when sources do not support the claim.",
       accent: "#8B5CF6",
     },
     {
       name: "MedScript", tagline: "Healthcare AI Platform", icon: FlaskConical,
-      stack: ["OCR", "NER", "Vector Search", "Gemini", "FastAPI"],
-      description: "Prescription understanding pipeline that turns handwritten scripts into structured patient guidance.",
-      challenges: "Robust OCR on noisy scans, drug name disambiguation, HIPAA-grade routing.",
-      results: "92% extraction F1, deployed pilot across 3 clinics.",
+      stack: ["OCR", "Computer Vision", "Clinical NER", "Gemini", "FastAPI", "Patient UX"],
+      description: "Prescription understanding pipeline that turns handwritten scripts into structured, patient-friendly guidance.",
+      challenges: "Robust OCR on noisy clinical scans, drug-name disambiguation, and safe routing of model outputs.",
+      results: "End-to-end clinical workflow from image upload to structured patient response.",
       accent: "#22D3EE",
     },
     {
-      name: "QLoRA Fine-Tuning Dashboard", tagline: "LLM Training Cockpit", icon: Zap,
-      stack: ["QLoRA", "PEFT", "WandB", "PyTorch", "Triton"],
-      description: "Live training cockpit: loss curves, GPU telemetry, parameter deltas, and eval suites.",
-      challenges: "Streaming metrics at scale and visualizing 4-bit quantization effects.",
-      results: "Cut fine-tune feedback loop from hours → minutes.",
+      name: "QLoRA Fine-Tuning", tagline: "LLM Engineering", icon: Zap,
+      stack: ["Qwen2.5", "QLoRA", "PEFT", "BitsAndBytes", "Transformers", "Eval"],
+      description: "Fine-tuning workflow for Qwen2.5 with 4-bit quantization, parameter-efficient adapters, and structured evaluation.",
+      challenges: "Memory-efficient training on commodity GPUs and disciplined evaluation across capability and safety axes.",
+      results: "Reproducible QLoRA pipeline with adapter checkpoints, training telemetry, and a model evaluation harness.",
       accent: "#3B82F6",
     },
   ];
@@ -660,34 +660,27 @@ function Architecture() {
  * SKILLS - tech matrix
  * ========================================================================== */
 function Skills() {
-  const categories: { name: string; icon: any; items: { name: string; exp: string }[] }[] = [
-    { name: "AI / ML", icon: Brain, items: [
-      { name: "PyTorch", exp: "4y" }, { name: "Transformers", exp: "3y" },
-      { name: "PEFT / QLoRA", exp: "2y" }, { name: "Diffusers", exp: "1y" }, { name: "Triton", exp: "1y" },
+  const categories: { name: string; icon: any; items: string[] }[] = [
+    { name: "AI Engineering", icon: Brain, items: [
+      "PyTorch", "Transformers", "scikit-learn", "Model Evaluation", "Schema Validation", "Inference Optimization",
     ]},
-    { name: "LLMs", icon: Sparkles, items: [
-      { name: "OpenAI", exp: "3y" }, { name: "Anthropic", exp: "2y" },
-      { name: "Gemini", exp: "2y" }, { name: "Llama", exp: "2y" }, { name: "Mistral", exp: "1y" }, { name: "vLLM", exp: "1y" },
+    { name: "LLM Engineering", icon: Sparkles, items: [
+      "OpenAI", "Anthropic", "Gemini", "Qwen2.5", "QLoRA", "PEFT", "BitsAndBytes", "RAG", "Citation Verification",
     ]},
     { name: "Backend", icon: Code2, items: [
-      { name: "FastAPI", exp: "4y" }, { name: "Node.js", exp: "3y" },
-      { name: "PostgreSQL", exp: "4y" }, { name: "Redis", exp: "3y" }, { name: "gRPC", exp: "1y" },
+      "FastAPI", "Python", "Node.js", "PostgreSQL", "pgvector", "REST", "OAuth 2.0",
     ]},
     { name: "Cloud", icon: Cloud, items: [
-      { name: "AWS", exp: "3y" }, { name: "GCP", exp: "2y" }, { name: "Terraform", exp: "2y" },
-      { name: "Docker", exp: "4y" }, { name: "Kubernetes", exp: "2y" },
+      "AWS", "S3", "EC2", "Lambda", "IAM",
     ]},
-    { name: "Data", icon: Database, items: [
-      { name: "Snowflake", exp: "2y" }, { name: "dbt", exp: "2y" },
-      { name: "Spark", exp: "2y" }, { name: "Airflow", exp: "2y" }, { name: "Kafka", exp: "1y" },
+    { name: "Data Engineering", icon: Database, items: [
+      "Snowflake", "Medallion Architecture", "ETL", "SQL", "Multi-tenant Pipelines",
     ]},
-    { name: "DevOps", icon: GitBranch, items: [
-      { name: "GitHub Actions", exp: "3y" }, { name: "Grafana", exp: "2y" },
-      { name: "Sentry", exp: "3y" }, { name: "OpenTelemetry", exp: "1y" },
+    { name: "Computer Vision", icon: Layers, items: [
+      "OCR", "Clinical NER", "Image Preprocessing", "Document Understanding",
     ]},
-    { name: "Frontend", icon: Layers, items: [
-      { name: "React", exp: "4y" }, { name: "Next.js", exp: "3y" },
-      { name: "Tailwind", exp: "3y" }, { name: "Framer Motion", exp: "2y" },
+    { name: "Infrastructure", icon: GitBranch, items: [
+      "Docker", "GitHub Actions", "Linux", "Observability", "Reliability",
     ]},
   ];
   return (
@@ -717,14 +710,11 @@ function Skills() {
             <div className="flex flex-wrap gap-2">
               {c.items.map(it => (
                 <motion.div
-                  key={it.name}
+                  key={it}
                   whileHover={{ y: -4, scale: 1.05 }}
                   className="group relative cursor-default rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs transition-colors hover:border-[var(--neon-cyan)]/40 hover:bg-[var(--neon-cyan)]/10"
                 >
-                  {it.name}
-                  <span className="ml-2 text-[10px] font-mono text-muted-foreground group-hover:text-[var(--neon-cyan)]">
-                    {it.exp}
-                  </span>
+                  {it}
                 </motion.div>
               ))}
             </div>
@@ -740,10 +730,20 @@ function Skills() {
  * ========================================================================== */
 function Experience() {
   const roles = [
-    { co: "Stealth AI Startup", role: "AI Engineering Intern", date: "2024", impact: "Shipped multi-tenant RAG to first enterprise customers.", tech: ["FastAPI", "Pinecone", "OpenAI", "Postgres"] },
-    { co: "FluxAI", role: "Founding Engineer", date: "2023 — Now", impact: "Built medallion data platform powering 40+ dashboards.", tech: ["AWS", "Snowflake", "dbt", "Next.js"] },
-    { co: "Research Lab", role: "Research Assistant", date: "2023", impact: "Co-authored ICAML paper on safety-aligned RAG.", tech: ["PyTorch", "PEFT", "WandB"] },
-    { co: "Healthcare Startup", role: "ML Intern", date: "2022", impact: "OCR + NER pipeline for prescription understanding.", tech: ["Tesseract", "spaCy", "Gemini"] },
+    {
+      co: "NeuzenAI",
+      role: "AI Engineering",
+      date: "Internship",
+      impact: "Worked on production AI pipelines, LLM evaluation, schema validation, and inference optimization with FastAPI services.",
+      tech: ["FastAPI", "LLM Evaluation", "Schema Validation", "Inference Optimization", "Python"],
+    },
+    {
+      co: "Megaminds IT Services",
+      role: "Machine Learning",
+      date: "Internship",
+      impact: "Built ML components for fraud detection, including NER, model integration, and data workflows behind FastAPI endpoints.",
+      tech: ["Machine Learning", "NER", "Fraud Detection", "FastAPI", "Python", "SQL"],
+    },
   ];
   return (
     <Section id="experience">
@@ -799,29 +799,28 @@ function Research() {
           className="overflow-hidden rounded-3xl glass-strong p-8"
         >
           <div className="flex items-center gap-2">
-            <span className="rounded-full bg-[var(--neon-violet)]/15 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-[var(--neon-violet)]">ICAML 2024</span>
+            <span className="rounded-full bg-[var(--neon-violet)]/15 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-[var(--neon-violet)]">ICAML 2025</span>
             <span className="text-xs text-muted-foreground">Conference paper</span>
           </div>
           <h3 className="mt-4 text-2xl font-semibold leading-tight">
-            Safety-aligned Retrieval Architectures for Legal Reasoning
+            Published research on applied AI systems
           </h3>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            We propose a dual-loop RAG system with citation verification that reduces hallucinated
-            statutory references by 88% on a legal QA benchmark while preserving fluency.
+            Peer-reviewed work presented at ICAML 2025, exploring practical architectures for production-grade AI systems.
           </p>
 
           <div className="mt-6 grid grid-cols-3 gap-3 text-center">
             <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-              <div className="text-2xl font-semibold text-gradient-primary">42</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Citations</div>
+              <div className="text-lg font-semibold text-gradient-primary">ICAML</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Venue</div>
             </div>
             <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-              <div className="text-2xl font-semibold text-gradient-primary">98.4%</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Accuracy</div>
+              <div className="text-lg font-semibold text-gradient-primary">2025</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Year</div>
             </div>
             <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-              <div className="text-2xl font-semibold text-gradient-primary">12pp</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Δ vs SOTA</div>
+              <div className="text-lg font-semibold text-gradient-primary">Applied AI</div>
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Track</div>
             </div>
           </div>
 
@@ -851,9 +850,9 @@ function Research() {
 
           <div className="mt-6 grid grid-cols-3 gap-3 text-center">
             {[
-              { v: "1.4k", l: "Stars", i: Star },
-              { v: "2.8k", l: "Commits", i: GitCommit },
-              { v: "47", l: "Repos", i: GitBranch },
+              { v: "—", l: "Stars", i: Star },
+              { v: "—", l: "Commits", i: GitCommit },
+              { v: "—", l: "Repos", i: GitBranch },
             ].map(s => (
               <div key={s.l} className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
                 <s.i className="mx-auto h-4 w-4 text-[var(--neon-cyan)]" />
@@ -918,13 +917,16 @@ function Contact() {
     { p: "$", t: "initialize_contact --user=hitesh" },
     { p: ">", t: "establishing secure channel..." },
     { p: ">", t: "channel ready ✓" },
-    { p: "$", t: "list_endpoints" },
+    { p: "$", t: "connect --target=hitesh.gottapu" },
+    { p: ">", t: "handshake complete" },
+    { p: "$", t: "deploy --intent=collaborate" },
   ];
   const endpoints = [
     { k: "email", v: "hitesh@gottapu.ai", icon: Mail, href: "mailto:hitesh@gottapu.ai" },
-    { k: "linkedin", v: "linkedin.com/in/hiteshgottapu", icon: Linkedin, href: "#" },
-    { k: "github", v: "github.com/hiteshgottapu", icon: Github, href: "#" },
-    { k: "calendly", v: "calendly.com/hiteshgottapu", icon: Calendar, href: "#" },
+    { k: "github", v: "github.com/hiteshgottapu", icon: Github, href: "https://github.com/hiteshgottapu" },
+    { k: "linkedin", v: "linkedin.com/in/hiteshgottapu", icon: Linkedin, href: "https://linkedin.com/in/hiteshgottapu" },
+    { k: "resume", v: "resume.pdf", icon: FileDown, href: "#" },
+    { k: "portfolio", v: "hiteshgottapu.dev", icon: ExternalLink, href: "#" },
   ];
   return (
     <Section id="contact">
