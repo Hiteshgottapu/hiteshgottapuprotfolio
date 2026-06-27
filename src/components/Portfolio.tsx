@@ -906,11 +906,18 @@ function Research() {
             <span className="text-xs text-muted-foreground">Conference paper</span>
           </div>
           <h3 className="mt-4 text-2xl font-semibold leading-tight">
-            Published research on applied AI systems
+            Real-Time Code Quality Prediction with Explainable AI and Interactive Visualizations
           </h3>
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Peer-reviewed work presented at ICAML 2025, exploring practical architectures for production-grade AI systems.
+            Streamlit-based framework that blends machine learning with XAI techniques (SHAP, LIME) for real-time software fault prediction. Features interactive defect heatmaps and actionable code quality recommendations.
           </p>
+
+          <div className="mt-4 text-xs text-muted-foreground">
+            <span className="text-[var(--neon-cyan)] font-mono">Authors:</span> Gottapu Hitesh, Kodamala Bhanu, Banki Sambasiva, Dodda Rahul, Balla Manoj Venkata Sai
+          </div>
+          <div className="mt-1 text-xs text-muted-foreground">
+            <span className="text-[var(--neon-cyan)] font-mono">Institution:</span> Seshadri Rao Gudlavalleru Engineering College
+          </div>
 
           <div className="mt-6 grid grid-cols-3 gap-3 text-center">
             <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
@@ -922,17 +929,14 @@ function Research() {
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Year</div>
             </div>
             <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-              <div className="text-lg font-semibold text-gradient-primary">Applied AI</div>
+              <div className="text-lg font-semibold text-gradient-primary">XAI / SE</div>
               <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Track</div>
             </div>
           </div>
 
           <div className="mt-6 flex gap-3">
-            <MagneticButton href="#" variant="primary">
-              <FileDown className="h-4 w-4" /> Download PDF
-            </MagneticButton>
-            <MagneticButton href="#" variant="ghost">
-              <ExternalLink className="h-4 w-4" /> View on arXiv
+            <MagneticButton href="https://psou.ac.in/asset/docs/files/202505161524319c90724728.pdf" variant="primary" target="_blank" rel="noreferrer">
+              <FileDown className="h-4 w-4" /> View Proceedings PDF
             </MagneticButton>
           </div>
         </motion.div>
