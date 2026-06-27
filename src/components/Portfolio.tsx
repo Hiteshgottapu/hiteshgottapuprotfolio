@@ -349,10 +349,10 @@ function Hero() {
             <MagneticButton href="#" variant="ghost">
               <FileDown className="h-4 w-4" /> Resume
             </MagneticButton>
-            <MagneticButton href="https://github.com/hiteshgottapu" variant="ghost">
+            <MagneticButton href="https://github.com/Hiteshgottapu" variant="ghost">
               <Github className="h-4 w-4" /> GitHub
             </MagneticButton>
-            <MagneticButton href="https://linkedin.com/in/hiteshgottapu" variant="ghost">
+            <MagneticButton href="https://www.linkedin.com/in/hitesh-gottapu/" variant="ghost">
               <Linkedin className="h-4 w-4" /> LinkedIn
             </MagneticButton>
             <MagneticButton href="#contact" variant="accent">
@@ -578,7 +578,7 @@ function Projects() {
       accent: "#3B82F6",
       actions: [
         { label: "View Architecture", href: "https://www.notion.so/FluxAI-System-Architecture-My-Contributions-2f9cd2cd103c804f9da6f71c339803cc", icon: Layers, tooltip: "Explore the complete enterprise architecture, OAuth 2.0 pipeline, Medallion data architecture, AWS infrastructure, and my engineering contributions.", analyticsId: "project_fluxai_architecture" },
-        { label: "System Design", href: "https://www.notion.so/FluxAI-System-Architecture-My-Contributions-2f9cd2cd103c804f9da6f71c339803cc", icon: Network, tooltip: "Open complete system design documentation", analyticsId: "project_fluxai_systemdesign" },
+        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/FluxAI", icon: Github, tooltip: "View the complete source code, API implementation, and data pipeline configuration.", analyticsId: "project_fluxai_github" },
       ],
     },
     {
@@ -590,7 +590,7 @@ function Projects() {
       accent: "#8B5CF6",
       actions: [
         { label: "Enterprise Architecture", href: "https://app.notion.com/p/BRAHMO-PLATFORM-ENTERPRISE-ARCHITECTURE-093c16e3e87d4052b8fe851395e2bcf2", icon: Layers, tooltip: "Explore the deterministic legal AI safety engine, citation verification workflow, dual-loop architecture, caching strategy, and production backend.", analyticsId: "project_brahmo_architecture" },
-        { label: "AI Safety Pipeline", href: "https://app.notion.com/p/BRAHMO-PLATFORM-ENTERPRISE-ARCHITECTURE-093c16e3e87d4052b8fe851395e2bcf2", icon: Shield, tooltip: "Open complete AI safety pipeline documentation", analyticsId: "project_brahmo_safety" },
+        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/brahmo-citation-safety", icon: Github, tooltip: "View the source code for the citation safety engine, dual-loop verifier, and RAG backend.", analyticsId: "project_brahmo_github" },
       ],
     },
     {
@@ -602,7 +602,7 @@ function Projects() {
       accent: "#22D3EE",
       actions: [
         { label: "View Technical Documentation", href: "https://www.notion.so/MedScript-AI-Powered-Prescription-Intelligence-Platform-2fecd2cd103c80149534df7851f45c4a", icon: FileText, tooltip: "Read the complete healthcare AI architecture including OCR pipeline, clinical entity extraction, vector retrieval, RAG workflow, and backend design.", analyticsId: "project_medscript_docs" },
-        { label: "Architecture", href: "https://www.notion.so/MedScript-AI-Powered-Prescription-Intelligence-Platform-2fecd2cd103c80149534df7851f45c4a", icon: Network, tooltip: "Open complete architecture documentation", analyticsId: "project_medscript_architecture" },
+        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/Medscript", icon: Github, tooltip: "View the source code for the prescription intelligence pipeline, OCR integration, and clinical NER modules.", analyticsId: "project_medscript_github" },
       ],
     },
     {
@@ -1019,8 +1019,8 @@ function Contact() {
   const commands = [
     { cmd: "connect", desc: "open secure email channel", href: "mailto:hitesh@gottapu.ai" },
     { cmd: "download_resume", desc: "fetch latest resume.pdf", href: "#" },
-    { cmd: "view_github", desc: "browse repositories", href: "https://github.com/hiteshgottapu" },
-    { cmd: "open_linkedin", desc: "open professional profile", href: "https://linkedin.com/in/hiteshgottapu" },
+    { cmd: "view_github", desc: "browse repositories", href: "https://github.com/Hiteshgottapu" },
+    { cmd: "open_linkedin", desc: "open professional profile", href: "https://www.linkedin.com/in/hitesh-gottapu/" },
     { cmd: "email", desc: "compose direct message", href: "mailto:hitesh@gottapu.ai" },
   ];
   return (
@@ -1098,10 +1098,10 @@ function Footer() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <a href="https://github.com/hiteshgottapu" aria-label="GitHub profile" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
+          <a href="https://github.com/Hiteshgottapu" target="_blank" rel="noreferrer" aria-label="GitHub profile" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
             <Github className="h-4 w-4" />
           </a>
-          <a href="https://www.linkedin.com/in/hiteshgottapu" aria-label="LinkedIn profile" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
+          <a href="https://www.linkedin.com/in/hitesh-gottapu/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
             <Linkedin className="h-4 w-4" />
           </a>
           <a href="mailto:hitesh@example.com" aria-label="Email Hitesh" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
