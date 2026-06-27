@@ -4,7 +4,7 @@ import {
   Brain, Cpu, Database, Cloud, Code2, Github, Linkedin, Mail, FileDown,
   ArrowRight, Sparkles, Shield, Network, Zap, Box, Layers, GitBranch,
   Terminal, ExternalLink, Calendar, Star, GitCommit, Award, FlaskConical,
-  Workflow, ChevronRight,
+  Workflow, ChevronRight, FileText, BookOpen,
 } from "lucide-react";
 
 /* ============================================================================
@@ -451,12 +451,46 @@ function About() {
 /* ============================================================================
  * PROJECTS - holographic tilt cards
  * ========================================================================== */
+type ProjectAction = {
+  label: string; href: string; icon: any;
+  tooltip: string; analyticsId: string;
+};
+
 type Project = {
   name: string; tagline: string; icon: any;
   stack: string[]; description: string;
   challenges: string; results: string;
   accent: string;
+  actions: ProjectAction[];
 };
+
+function ProjectActionButton({
+  href, icon: Icon, label, tooltip, analyticsId,
+}: {
+  href: string; icon: any; label: string; tooltip: string; analyticsId: string;
+}) {
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={tooltip}
+      data-analytics={analyticsId}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      className="group/btn relative inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-gradient-to-b from-white/[0.06] to-white/[0.02] px-4 py-2.5 text-xs font-medium text-foreground backdrop-blur-md transition-all duration-300 hover:border-[var(--neon-cyan)]/30 hover:shadow-[0_0_20px_-4px_rgba(34,211,238,0.25)] sm:w-auto"
+    >
+      <Icon className="h-4 w-4 text-muted-foreground transition-all duration-300 group-hover/btn:scale-110 group-hover/btn:text-[var(--neon-cyan)]" />
+      <span className="transition-colors duration-300 group-hover/btn:text-[var(--neon-cyan)]">{label}</span>
+
+      {/* Tooltip */}
+      <span className="pointer-events-none absolute -top-9 left-1/2 z-20 w-max max-w-[220px] -translate-x-1/2 rounded-md bg-[var(--card)] px-2.5 py-1.5 text-[10px] font-medium text-foreground opacity-0 shadow-lg ring-1 ring-white/10 transition-opacity duration-200 group-hover/btn:opacity-100">
+        {tooltip}
+        <span className="absolute left-1/2 top-full -translate-x-1/2 border-[4px] border-transparent border-t-[var(--card)]" />
+      </span>
+    </motion.a>
+  );
+}
 
 function ProjectCard({ p, i }: { p: Project; i: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -495,10 +529,6 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl glass">
             <p.icon className="h-7 w-7" style={{ color: p.accent }} />
           </div>
-          <div className="flex gap-2 opacity-60 transition-opacity group-hover:opacity-100">
-            <a href="#" aria-label={`${p.name} source on GitHub`} className="rounded-full glass p-2"><Github className="h-4 w-4" /></a>
-            <a href="#" aria-label={`${p.name} live demo`} className="rounded-full glass p-2"><ExternalLink className="h-4 w-4" /></a>
-          </div>
         </div>
 
         <h3 className="mt-6 text-2xl font-semibold tracking-tight">{p.name}</h3>
@@ -526,9 +556,12 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
           </div>
         </div>
 
-        <a href="#" className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-[var(--neon-cyan)] hover:gap-2.5 transition-all">
-          Open case study <ArrowRight className="h-3.5 w-3.5" />
-        </a>
+        {/* Action buttons */}
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+          {p.actions.map(a => (
+            <ProjectActionButton key={a.label} {...a} />
+          ))}
+        </div>
       </div>
     </motion.div>
   );
@@ -543,6 +576,10 @@ function Projects() {
       challenges: "Multi-tenant ingestion with strict isolation, schema drift handling, and a clean bronze → silver → gold lineage.",
       results: "Backend + data engineering platform exposing governed, AI-ready datasets through FastAPI APIs.",
       accent: "#3B82F6",
+      actions: [
+        { label: "View Architecture", href: "https://www.notion.so/FluxAI-System-Architecture-My-Contributions-2f9cd2cd103c804f9da6f71c339803cc", icon: Layers, tooltip: "Explore the complete enterprise architecture, OAuth 2.0 pipeline, Medallion data architecture, AWS infrastructure, and my engineering contributions.", analyticsId: "project_fluxai_architecture" },
+        { label: "System Design", href: "https://www.notion.so/FluxAI-System-Architecture-My-Contributions-2f9cd2cd103c804f9da6f71c339803cc", icon: Network, tooltip: "Open complete system design documentation", analyticsId: "project_fluxai_systemdesign" },
+      ],
     },
     {
       name: "Brahmo", tagline: "Legal AI Safety Engine", icon: Shield,
@@ -551,6 +588,10 @@ function Projects() {
       challenges: "Designing a non-LLM verification loop that catches unsupported citations without sacrificing response quality.",
       results: "Designed to minimize hallucinations through deterministic validation, with grounded refusals when sources do not support the claim.",
       accent: "#8B5CF6",
+      actions: [
+        { label: "Enterprise Architecture", href: "https://app.notion.com/p/BRAHMO-PLATFORM-ENTERPRISE-ARCHITECTURE-093c16e3e87d4052b8fe851395e2bcf2", icon: Layers, tooltip: "Explore the deterministic legal AI safety engine, citation verification workflow, dual-loop architecture, caching strategy, and production backend.", analyticsId: "project_brahmo_architecture" },
+        { label: "AI Safety Pipeline", href: "https://app.notion.com/p/BRAHMO-PLATFORM-ENTERPRISE-ARCHITECTURE-093c16e3e87d4052b8fe851395e2bcf2", icon: Shield, tooltip: "Open complete AI safety pipeline documentation", analyticsId: "project_brahmo_safety" },
+      ],
     },
     {
       name: "MedScript", tagline: "Healthcare AI Platform", icon: FlaskConical,
@@ -559,6 +600,10 @@ function Projects() {
       challenges: "Robust OCR on noisy clinical scans, drug-name disambiguation, structured record extraction, and safe routing of model outputs.",
       results: "End-to-end clinical workflow from image upload to structured, patient-friendly guidance.",
       accent: "#22D3EE",
+      actions: [
+        { label: "View Technical Documentation", href: "https://www.notion.so/MedScript-AI-Powered-Prescription-Intelligence-Platform-2fecd2cd103c80149534df7851f45c4a", icon: FileText, tooltip: "Read the complete healthcare AI architecture including OCR pipeline, clinical entity extraction, vector retrieval, RAG workflow, and backend design.", analyticsId: "project_medscript_docs" },
+        { label: "Architecture", href: "https://www.notion.so/MedScript-AI-Powered-Prescription-Intelligence-Platform-2fecd2cd103c80149534df7851f45c4a", icon: Network, tooltip: "Open complete architecture documentation", analyticsId: "project_medscript_architecture" },
+      ],
     },
     {
       name: "QLoRA Fine-Tuning", tagline: "LLM Engineering", icon: Zap,
@@ -567,6 +612,10 @@ function Projects() {
       challenges: "Memory-efficient training on commodity GPUs and disciplined evaluation across capability and regression axes.",
       results: "0.28% trainable parameters · 4-bit NF4 quantization · reproducible PEFT pipeline with eval harness.",
       accent: "#3B82F6",
+      actions: [
+        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/Domain-Adapting-Qwen2.5-1.5B-for-Coding-Q-A-Using-QLoRA", icon: Github, tooltip: "View the complete implementation of QLoRA fine-tuning, PEFT, 4-bit quantization, evaluation pipeline, training configuration, and experimental results.", analyticsId: "project_qlora_github" },
+        { label: "Technical Documentation", href: "https://github.com/Hiteshgottapu/Domain-Adapting-Qwen2.5-1.5B-for-Coding-Q-A-Using-QLoRA", icon: BookOpen, tooltip: "Open technical documentation", analyticsId: "project_qlora_docs" },
+      ],
     },
   ];
 
