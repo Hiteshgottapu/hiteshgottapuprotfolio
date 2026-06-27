@@ -464,6 +464,34 @@ type Project = {
   actions: ProjectAction[];
 };
 
+function ProjectActionButton({
+  href, icon: Icon, label, tooltip, analyticsId,
+}: {
+  href: string; icon: any; label: string; tooltip: string; analyticsId: string;
+}) {
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={tooltip}
+      data-analytics={analyticsId}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      className="group/btn relative inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-gradient-to-b from-white/[0.06] to-white/[0.02] px-4 py-2.5 text-xs font-medium text-foreground backdrop-blur-md transition-all duration-300 hover:border-[var(--neon-cyan)]/30 hover:shadow-[0_0_20px_-4px_rgba(34,211,238,0.25)] sm:w-auto"
+    >
+      <Icon className="h-4 w-4 text-muted-foreground transition-all duration-300 group-hover/btn:scale-110 group-hover/btn:text-[var(--neon-cyan)]" />
+      <span className="transition-colors duration-300 group-hover/btn:text-[var(--neon-cyan)]">{label}</span>
+
+      {/* Tooltip */}
+      <span className="pointer-events-none absolute -top-9 left-1/2 z-20 w-max max-w-[220px] -translate-x-1/2 rounded-md bg-[var(--card)] px-2.5 py-1.5 text-[10px] font-medium text-foreground opacity-0 shadow-lg ring-1 ring-white/10 transition-opacity duration-200 group-hover/btn:opacity-100">
+        {tooltip}
+        <span className="absolute left-1/2 top-full -translate-x-1/2 border-[4px] border-transparent border-t-[var(--card)]" />
+      </span>
+    </motion.a>
+  );
+}
+
 function ProjectCard({ p, i }: { p: Project; i: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const rx = useSpring(0, { stiffness: 120, damping: 12 });
