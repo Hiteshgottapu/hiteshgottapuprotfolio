@@ -335,7 +335,7 @@ function Hero() {
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.35 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
           >
-            Building production AI systems, enterprise data platforms, backend infrastructure, and Large Language Model applications.
+            Production AI systems · Backend engineering · Enterprise data engineering · LLM applications · AI infrastructure.
           </motion.p>
 
           <motion.div
