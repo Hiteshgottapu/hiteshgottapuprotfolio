@@ -392,11 +392,11 @@ function Hero() {
  * ========================================================================== */
 function About() {
   const items = [
-    { year: "2024", title: "B.Tech in Computer Science", subtitle: "Specialization: AI & ML", icon: Award },
-    { year: "2024", title: "Research Publication — ICAML", subtitle: "Safety-aligned RAG architectures", icon: FlaskConical },
-    { year: "2023", title: "AI Engineering Intern", subtitle: "Production LLM systems", icon: Brain },
-    { year: "2023", title: "Data Engineering Intern", subtitle: "Medallion architecture, ETL on AWS", icon: Database },
-    { year: "2022", title: "Backend Engineering Intern", subtitle: "FastAPI, distributed systems", icon: Code2 },
+    { year: "ICAML 2025", title: "Published Research", subtitle: "Peer-reviewed paper on applied AI systems.", icon: FlaskConical },
+    { year: "5×", title: "Hackathon Winner", subtitle: "Applied AI under tight constraints and shipping pressure.", icon: Award },
+    { year: "Now", title: "NeuzenAI", subtitle: "Production AI pipelines, LLM evaluation, schema validation, FastAPI, inference optimization.", icon: Brain },
+    { year: "Past", title: "Megaminds IT Services", subtitle: "Machine Learning, NER, FastAPI, Fraud Detection, Python, SQL.", icon: Database },
+    { year: "Edu", title: "B.Tech — AI & Data Science", subtitle: "Foundations across ML, systems, and data engineering.", icon: Code2 },
   ];
   return (
     <Section id="about">
