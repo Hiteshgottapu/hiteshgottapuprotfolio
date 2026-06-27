@@ -967,20 +967,12 @@ function Research() {
  * CONTACT - terminal
  * ========================================================================== */
 function Contact() {
-  const lines = [
-    { p: "$", t: "initialize_contact --user=hitesh" },
-    { p: ">", t: "establishing secure channel..." },
-    { p: ">", t: "channel ready ✓" },
-    { p: "$", t: "connect --target=hitesh.gottapu" },
-    { p: ">", t: "handshake complete" },
-    { p: "$", t: "deploy --intent=collaborate" },
-  ];
-  const endpoints = [
-    { k: "email", v: "hitesh@gottapu.ai", icon: Mail, href: "mailto:hitesh@gottapu.ai" },
-    { k: "github", v: "github.com/hiteshgottapu", icon: Github, href: "https://github.com/hiteshgottapu" },
-    { k: "linkedin", v: "linkedin.com/in/hiteshgottapu", icon: Linkedin, href: "https://linkedin.com/in/hiteshgottapu" },
-    { k: "resume", v: "resume.pdf", icon: FileDown, href: "#" },
-    { k: "portfolio", v: "hiteshgottapu.dev", icon: ExternalLink, href: "#" },
+  const commands = [
+    { cmd: "connect", desc: "open secure email channel", href: "mailto:hitesh@gottapu.ai" },
+    { cmd: "download_resume", desc: "fetch latest resume.pdf", href: "#" },
+    { cmd: "view_github", desc: "browse repositories", href: "https://github.com/hiteshgottapu" },
+    { cmd: "open_linkedin", desc: "open professional profile", href: "https://linkedin.com/in/hiteshgottapu" },
+    { cmd: "email", desc: "compose direct message", href: "mailto:hitesh@gottapu.ai" },
   ];
   return (
     <Section id="contact">
@@ -999,36 +991,33 @@ function Contact() {
           <span className="ml-3 text-xs font-mono text-muted-foreground">hitesh@aicore — bash</span>
         </div>
         <div className="p-8 font-mono text-sm">
-          {lines.map((l, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.4, duration: 0.4 }}
-              className="flex gap-3"
-            >
-              <span className="text-[var(--neon-violet)]">{l.p}</span>
-              <span className={l.p === "$" ? "text-foreground" : "text-muted-foreground"}>{l.t}</span>
-            </motion.div>
-          ))}
-          <motion.div
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ delay: lines.length * 0.4 + 0.2 }}
-            className="mt-6 grid gap-3 md:grid-cols-2"
-          >
-            {endpoints.map(e => (
-              <a key={e.k} href={e.href}
-                className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-[var(--neon-cyan)]/40 hover:bg-[var(--neon-cyan)]/5">
-                <div className="flex items-center gap-3">
-                  <e.icon className="h-4 w-4 text-[var(--neon-cyan)]" />
-                  <div>
-                    <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{e.k}</div>
-                    <div className="text-xs text-foreground">{e.v}</div>
-                  </div>
+          <div className="text-muted-foreground mb-4">
+            <span className="text-[var(--neon-violet)]">$</span> help
+            <div className="pl-4 text-xs mt-1">available commands — click to execute</div>
+          </div>
+          <div className="grid gap-2 md:grid-cols-2">
+            {commands.map((c, i) => (
+              <motion.a
+                key={c.cmd}
+                href={c.href}
+                target={c.href.startsWith("http") ? "_blank" : undefined}
+                rel="noreferrer"
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.08, duration: 0.4 }}
+                whileHover={{ x: 4 }}
+                className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 transition-all hover:border-[var(--neon-cyan)]/40 hover:bg-[var(--neon-cyan)]/5"
+              >
+                <div className="flex items-baseline gap-3">
+                  <span className="text-[var(--neon-violet)]">$</span>
+                  <span className="text-foreground">{c.cmd}</span>
+                  <span className="text-[10px] text-muted-foreground hidden md:inline">— {c.desc}</span>
                 </div>
                 <ArrowRight className="h-4 w-4 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-[var(--neon-cyan)]" />
-              </a>
+              </motion.a>
             ))}
-          </motion.div>
+          </div>
           <div className="mt-6 flex gap-2">
             <span className="text-[var(--neon-violet)]">$</span>
             <span className="text-foreground">_</span>
