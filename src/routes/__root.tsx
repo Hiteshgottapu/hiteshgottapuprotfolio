@@ -110,7 +110,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "document.querySelectorAll('link[rel=\"stylesheet\"][media=\"print\"]').forEach(function(l){l.media='all';});",
       },
     ],
-    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
