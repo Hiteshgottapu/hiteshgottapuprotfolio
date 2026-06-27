@@ -451,11 +451,17 @@ function About() {
 /* ============================================================================
  * PROJECTS - holographic tilt cards
  * ========================================================================== */
+type ProjectAction = {
+  label: string; href: string; icon: any;
+  tooltip: string; analyticsId: string;
+};
+
 type Project = {
   name: string; tagline: string; icon: any;
   stack: string[]; description: string;
   challenges: string; results: string;
   accent: string;
+  actions: ProjectAction[];
 };
 
 function ProjectCard({ p, i }: { p: Project; i: number }) {
