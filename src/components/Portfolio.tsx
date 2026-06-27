@@ -405,9 +405,9 @@ function About() {
         Engineering AI systems that<br />ship to production.
       </SectionHeading>
       <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-        I design and ship end-to-end AI infrastructure — from data pipelines and LLM fine-tuning to
-        retrieval, safety layers, and enterprise application surfaces. I care about latency budgets,
-        evals, and the boring parts that make AI actually work in production.
+        I design and ship production AI systems — backend services, enterprise data platforms,
+        and LLM applications wired for reliability and scale. I focus on system design,
+        evaluation, and the engineering decisions that make AI actually work in production.
       </p>
 
       <div className="relative mt-20">
