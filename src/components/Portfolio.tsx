@@ -1023,12 +1023,11 @@ function Research() {
  * ========================================================================== */
 function Contact() {
   const commands = [
-    { cmd: "connect", desc: "open secure email channel", href: "mailto:hiteshgottapu@gmail.com" },
+    { cmd: "email", desc: "compose direct message", href: "mailto:hiteshgottapu@gmail.com" },
     { cmd: "download_resume", desc: "fetch latest resume.pdf", href: "https://drive.google.com/file/d/1MkXXSoB_9CBG_1rlrRhZ_HNc79EQJxEa/view?usp=sharing" },
     { cmd: "view_github", desc: "browse repositories", href: "https://github.com/Hiteshgottapu" },
     { cmd: "open_linkedin", desc: "open professional profile", href: "https://www.linkedin.com/in/hitesh-gottapu/" },
     { cmd: "whatsapp", desc: "message on WhatsApp", href: "https://wa.me/918143506309" },
-    { cmd: "email", desc: "compose direct message", href: "mailto:hiteshgottapu@gmail.com" },
   ];
   return (
     <Section id="contact">
