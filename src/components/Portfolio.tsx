@@ -399,8 +399,8 @@ function About() {
   const items = [
     { year: "ICAML 2025", title: "Published Research", subtitle: "Peer-reviewed paper on applied AI systems.", icon: FlaskConical },
     { year: "5×", title: "Hackathon Winner", subtitle: "Applied AI under tight constraints and shipping pressure.", icon: Award },
-    { year: "Now", title: "NeuzenAI", subtitle: "Production AI pipelines, LLM evaluation, schema validation, FastAPI, inference optimization.", icon: Brain },
-    { year: "Past", title: "Megaminds IT Services", subtitle: "Machine Learning, NER, FastAPI, Fraud Detection, Python, SQL.", icon: Database },
+    { year: "Now", title: "NeuzenAI — AI / Data Science Engineer Intern", subtitle: "Production AI pipelines, LLM evaluation, schema validation, FastAPI services, inference optimization.", icon: Brain },
+    { year: "Past", title: "Megaminds IT Services — Data Science Developer Intern", subtitle: "ML, NER, FastAPI, fraud detection workflows, Python, SQL.", icon: Database },
     { year: "Edu", title: "B.Tech — AI & Data Science", subtitle: "Foundations across ML, systems, and data engineering.", icon: Code2 },
   ];
   return (
