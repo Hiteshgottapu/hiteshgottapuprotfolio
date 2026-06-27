@@ -549,6 +549,10 @@ function Projects() {
       challenges: "Multi-tenant ingestion with strict isolation, schema drift handling, and a clean bronze → silver → gold lineage.",
       results: "Backend + data engineering platform exposing governed, AI-ready datasets through FastAPI APIs.",
       accent: "#3B82F6",
+      actions: [
+        { label: "View Architecture", href: "https://www.notion.so/FluxAI-System-Architecture-My-Contributions-2f9cd2cd103c804f9da6f71c339803cc", icon: Layers, tooltip: "Explore the complete enterprise architecture, OAuth 2.0 pipeline, Medallion data architecture, AWS infrastructure, and my engineering contributions.", analyticsId: "project_fluxai_architecture" },
+        { label: "System Design", href: "https://www.notion.so/FluxAI-System-Architecture-My-Contributions-2f9cd2cd103c804f9da6f71c339803cc", icon: Network, tooltip: "Open complete system design documentation", analyticsId: "project_fluxai_systemdesign" },
+      ],
     },
     {
       name: "Brahmo", tagline: "Legal AI Safety Engine", icon: Shield,
@@ -557,6 +561,10 @@ function Projects() {
       challenges: "Designing a non-LLM verification loop that catches unsupported citations without sacrificing response quality.",
       results: "Designed to minimize hallucinations through deterministic validation, with grounded refusals when sources do not support the claim.",
       accent: "#8B5CF6",
+      actions: [
+        { label: "Enterprise Architecture", href: "https://app.notion.com/p/BRAHMO-PLATFORM-ENTERPRISE-ARCHITECTURE-093c16e3e87d4052b8fe851395e2bcf2", icon: Layers, tooltip: "Explore the deterministic legal AI safety engine, citation verification workflow, dual-loop architecture, caching strategy, and production backend.", analyticsId: "project_brahmo_architecture" },
+        { label: "AI Safety Pipeline", href: "https://app.notion.com/p/BRAHMO-PLATFORM-ENTERPRISE-ARCHITECTURE-093c16e3e87d4052b8fe851395e2bcf2", icon: Shield, tooltip: "Open complete AI safety pipeline documentation", analyticsId: "project_brahmo_safety" },
+      ],
     },
     {
       name: "MedScript", tagline: "Healthcare AI Platform", icon: FlaskConical,
@@ -565,6 +573,10 @@ function Projects() {
       challenges: "Robust OCR on noisy clinical scans, drug-name disambiguation, structured record extraction, and safe routing of model outputs.",
       results: "End-to-end clinical workflow from image upload to structured, patient-friendly guidance.",
       accent: "#22D3EE",
+      actions: [
+        { label: "View Technical Documentation", href: "https://www.notion.so/MedScript-AI-Powered-Prescription-Intelligence-Platform-2fecd2cd103c80149534df7851f45c4a", icon: FileText, tooltip: "Read the complete healthcare AI architecture including OCR pipeline, clinical entity extraction, vector retrieval, RAG workflow, and backend design.", analyticsId: "project_medscript_docs" },
+        { label: "Architecture", href: "https://www.notion.so/MedScript-AI-Powered-Prescription-Intelligence-Platform-2fecd2cd103c80149534df7851f45c4a", icon: Network, tooltip: "Open complete architecture documentation", analyticsId: "project_medscript_architecture" },
+      ],
     },
     {
       name: "QLoRA Fine-Tuning", tagline: "LLM Engineering", icon: Zap,
@@ -573,6 +585,10 @@ function Projects() {
       challenges: "Memory-efficient training on commodity GPUs and disciplined evaluation across capability and regression axes.",
       results: "0.28% trainable parameters · 4-bit NF4 quantization · reproducible PEFT pipeline with eval harness.",
       accent: "#3B82F6",
+      actions: [
+        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/Domain-Adapting-Qwen2.5-1.5B-for-Coding-Q-A-Using-QLoRA", icon: Github, tooltip: "View the complete implementation of QLoRA fine-tuning, PEFT, 4-bit quantization, evaluation pipeline, training configuration, and experimental results.", analyticsId: "project_qlora_github" },
+        { label: "Technical Documentation", href: "https://github.com/Hiteshgottapu/Domain-Adapting-Qwen2.5-1.5B-for-Coding-Q-A-Using-QLoRA", icon: BookOpen, tooltip: "Open technical documentation", analyticsId: "project_qlora_docs" },
+      ],
     },
   ];
 
