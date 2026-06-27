@@ -1049,8 +1049,8 @@ function Footer() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          {[Github, Linkedin, Mail].map((I, i) => (
-            <a key={i} href="#" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
+          {([[Github, "GitHub"], [Linkedin, "LinkedIn"], [Mail, "Email"]] as const).map(([I, label], i) => (
+            <a key={i} href="#" aria-label={label} className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
               <I className="h-4 w-4" />
             </a>
           ))}
