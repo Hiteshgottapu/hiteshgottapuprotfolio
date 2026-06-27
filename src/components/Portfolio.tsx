@@ -556,9 +556,12 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
           </div>
         </div>
 
-        <a href="#" className="mt-6 inline-flex items-center gap-1.5 text-xs font-medium text-[var(--neon-cyan)] hover:gap-2.5 transition-all">
-          Open case study <ArrowRight className="h-3.5 w-3.5" />
-        </a>
+        {/* Action buttons */}
+        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+          {p.actions.map(a => (
+            <ProjectActionButton key={a.label} {...a} />
+          ))}
+        </div>
       </div>
     </motion.div>
   );
