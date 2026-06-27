@@ -775,7 +775,8 @@ function Experience() {
                 <Cpu className="h-4 w-4 text-[var(--neon-cyan)]" />
               </div>
             </div>
-            <p className="mt-4 text-sm leading-relaxed">{r.impact}</p>
+            <div className="mt-4 text-[10px] uppercase tracking-widest text-[var(--neon-cyan)]">Key Contributions</div>
+            <p className="mt-1 text-sm leading-relaxed">{r.impact}</p>
             <div className="mt-4 flex flex-wrap gap-1.5">
               {r.tech.map(t => (
                 <span key={t} className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] font-mono text-muted-foreground">{t}</span>
