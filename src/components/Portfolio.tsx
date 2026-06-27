@@ -529,10 +529,6 @@ function ProjectCard({ p, i }: { p: Project; i: number }) {
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl glass">
             <p.icon className="h-7 w-7" style={{ color: p.accent }} />
           </div>
-          <div className="flex gap-2 opacity-60 transition-opacity group-hover:opacity-100">
-            <a href="#" aria-label={`${p.name} source on GitHub`} className="rounded-full glass p-2"><Github className="h-4 w-4" /></a>
-            <a href="#" aria-label={`${p.name} live demo`} className="rounded-full glass p-2"><ExternalLink className="h-4 w-4" /></a>
-          </div>
         </div>
 
         <h3 className="mt-6 text-2xl font-semibold tracking-tight">{p.name}</h3>
