@@ -1061,7 +1061,7 @@ function Contact() {
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel="noreferrer"
-                onClick={c.cmd === "email" ? handleEmailClick : undefined}
+                onClick={c.cmd === "email" ? () => setCopied(true) : undefined}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
