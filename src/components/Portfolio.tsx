@@ -48,8 +48,8 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 }
 
 function MagneticButton({
-  children, variant = "primary", href, onClick,
-}: { children: React.ReactNode; variant?: "primary" | "ghost" | "accent"; href?: string; onClick?: () => void }) {
+  children, variant = "primary", href, onClick, target, rel,
+}: { children: React.ReactNode; variant?: "primary" | "ghost" | "accent"; href?: string; onClick?: () => void; target?: string; rel?: string }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const x = useSpring(0, { stiffness: 200, damping: 15 });
   const y = useSpring(0, { stiffness: 200, damping: 15 });
@@ -74,6 +74,8 @@ function MagneticButton({
       ref={ref}
       href={href}
       onClick={onClick}
+      target={target}
+      rel={rel}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       style={{ x, y }}
