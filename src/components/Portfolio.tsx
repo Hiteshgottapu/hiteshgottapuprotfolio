@@ -4,7 +4,7 @@ import {
   Brain, Cpu, Database, Cloud, Code2, Github, Linkedin, Mail, FileDown,
   ArrowRight, Sparkles, Shield, Network, Zap, Box, Layers, GitBranch,
   Terminal, ExternalLink, Calendar, Star, GitCommit, Award, FlaskConical,
-  Workflow, ChevronRight,
+  Workflow, ChevronRight, FileText, BookOpen,
 } from "lucide-react";
 
 /* ============================================================================
