@@ -943,7 +943,7 @@ function Research() {
           </div>
         </motion.div>
 
-        {/* GitHub mini dashboard */}
+        {/* Recognition & Achievements gallery */}
         <motion.div
           initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.1 }}
@@ -951,66 +951,64 @@ function Research() {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Github className="h-5 w-5" />
-              <span className="font-semibold">GitHub Analytics</span>
+              <Award className="h-5 w-5 text-[var(--neon-cyan)]" />
+              <span className="font-semibold">Recognition & Impact</span>
             </div>
-            <span className="text-xs text-muted-foreground font-mono">@hiteshgottapu</span>
+            <span className="text-xs text-muted-foreground font-mono">real-world</span>
           </div>
 
-          <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-            {[
-              { v: "—", l: "Stars", i: Star },
-              { v: "—", l: "Commits", i: GitCommit },
-              { v: "—", l: "Repos", i: GitBranch },
-            ].map(s => (
-              <div key={s.l} className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-                <s.i className="mx-auto h-4 w-4 text-[var(--neon-cyan)]" />
-                <div className="mt-2 text-xl font-semibold">{s.v}</div>
-                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{s.l}</div>
+          <div className="mt-6 space-y-4">
+            <motion.figure
+              whileHover={{ y: -3 }}
+              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02]"
+            >
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <img
+                  src={ministerImg.url}
+                  alt="Hitesh Gottapu presenting MedScript to Hon. Minister Dr. Chandra Sekhar Pemmasani at the GDG Solutions Challenge"
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                <span className="absolute left-3 top-3 rounded-full bg-[var(--neon-violet)]/20 px-2.5 py-1 text-[9px] font-mono uppercase tracking-widest text-[var(--neon-violet)] backdrop-blur">
+                  Ministerial Recognition
+                </span>
               </div>
-            ))}
-          </div>
+              <figcaption className="p-4">
+                <div className="text-sm font-semibold leading-tight">
+                  MedScript demoed to Hon. Minister Dr. Chandra Sekhar Pemmasani
+                </div>
+                <div className="mt-1 text-xs text-muted-foreground">
+                  GDG Solutions Challenge · Recognized for real-world healthcare AI impact in handwritten prescription recognition.
+                </div>
+              </figcaption>
+            </motion.figure>
 
-          {/* contribution heatmap */}
-          <div className="mt-6">
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2">Contributions</div>
-            <div className="grid grid-flow-col grid-rows-7 gap-[3px]">
-              {Array.from({ length: 7 * 24 }).map((_, i) => {
-                const intensity = ((i * 53) % 5) / 4;
-                return (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: i * 0.003 }}
-                    className="h-2.5 w-2.5 rounded-[2px]"
-                    style={{
-                      background: intensity < 0.1
-                        ? "rgba(255,255,255,0.04)"
-                        : `color-mix(in oklab, var(--neon-cyan) ${intensity * 80}%, rgba(11,17,32,0.6))`,
-                    }}
-                  />
-                );
-              })}
-            </div>
-          </div>
-
-          {/* language bar */}
-          <div className="mt-6">
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-2">Languages</div>
-            <div className="flex h-2 w-full overflow-hidden rounded-full bg-white/5">
-              <div style={{ width: "48%", background: "#3B82F6" }} />
-              <div style={{ width: "26%", background: "#22D3EE" }} />
-              <div style={{ width: "16%", background: "#8B5CF6" }} />
-              <div style={{ width: "10%", background: "#64748b" }} />
-            </div>
-            <div className="mt-2 flex flex-wrap gap-3 text-[10px] font-mono text-muted-foreground">
-              <span><span className="inline-block h-2 w-2 rounded-full mr-1.5" style={{ background: "#3B82F6" }} />Python 48%</span>
-              <span><span className="inline-block h-2 w-2 rounded-full mr-1.5" style={{ background: "#22D3EE" }} />TypeScript 26%</span>
-              <span><span className="inline-block h-2 w-2 rounded-full mr-1.5" style={{ background: "#8B5CF6" }} />Rust 16%</span>
-              <span><span className="inline-block h-2 w-2 rounded-full mr-1.5" style={{ background: "#64748b" }} />Other 10%</span>
-            </div>
+            <motion.figure
+              whileHover={{ y: -3 }}
+              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02]"
+            >
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <img
+                  src={boardroomImg.url}
+                  alt="Hitesh Gottapu with C-suite leadership in the Miracle Software Systems boardroom after presenting MedScript"
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                <span className="absolute left-3 top-3 rounded-full bg-[var(--neon-cyan)]/20 px-2.5 py-1 text-[9px] font-mono uppercase tracking-widest text-[var(--neon-cyan)] backdrop-blur">
+                  C-Suite Presentation
+                </span>
+              </div>
+              <figcaption className="p-4">
+                <div className="text-sm font-semibold leading-tight">
+                  MedScript presented to C-suite at Miracle Software Systems
+                </div>
+                <div className="mt-1 text-xs text-muted-foreground">
+                  Boardroom review with executive leadership — production healthcare AI evaluated for enterprise deployment.
+                </div>
+              </figcaption>
+            </motion.figure>
           </div>
         </motion.div>
       </div>
