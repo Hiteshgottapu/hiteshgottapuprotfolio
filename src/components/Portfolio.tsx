@@ -1026,22 +1026,12 @@ function Contact() {
   const email = "hiteshgottapu@gmail.com";
 
   const commands = [
-    { cmd: "email", desc: "compose direct message", href: `mailto:${email}` },
+    { cmd: "email", desc: "open mail client", href: `mailto:${email}?subject=Reaching out from your portfolio` },
     { cmd: "download_resume", desc: "fetch latest resume.pdf", href: "https://drive.google.com/file/d/1MkXXSoB_9CBG_1rlrRhZ_HNc79EQJxEa/view?usp=sharing" },
     { cmd: "view_github", desc: "browse repositories", href: "https://github.com/Hiteshgottapu" },
     { cmd: "open_linkedin", desc: "open professional profile", href: "https://www.linkedin.com/in/hitesh-gottapu/" },
     { cmd: "whatsapp", desc: "message on WhatsApp", href: "https://wa.me/918143506309" },
   ];
-
-  async function handleEmailClick() {
-    try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    } catch {
-      // clipboard API unavailable — let the mailto href work normally
-    }
-  }
 
   return (
     <Section id="contact">
