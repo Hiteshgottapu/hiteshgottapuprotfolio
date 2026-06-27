@@ -1002,7 +1002,7 @@ function Footer() {
             </div>
           </div>
           <div className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Hitesh Gottapu — Crafted with intent.
+            © {new Date().getFullYear()} Hitesh Gottapu · Hyderabad, India
           </div>
         </div>
         <div className="flex items-center gap-2">
