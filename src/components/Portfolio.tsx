@@ -6,6 +6,8 @@ import {
   Terminal, ExternalLink, Calendar, Star, GitCommit, Award, FlaskConical,
   Workflow, ChevronRight, FileText, BookOpen,
 } from "lucide-react";
+import ministerImg from "@/assets/minister-pemmasani.jpg.asset.json";
+import boardroomImg from "@/assets/miracle-boardroom.jpg.asset.json";
 
 /* ============================================================================
  * Atoms / Primitives
