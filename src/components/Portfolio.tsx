@@ -737,16 +737,16 @@ function Experience() {
   const roles = [
     {
       co: "NeuzenAI",
-      role: "AI Engineering",
+      role: "AI / Data Science Engineer Intern",
       date: "Internship",
-      impact: "Worked on production AI pipelines, LLM evaluation, schema validation, and inference optimization with FastAPI services.",
+      impact: "Production AI pipelines, LLM evaluation, schema validation, FastAPI services, and inference optimization for shipping AI features.",
       tech: ["FastAPI", "LLM Evaluation", "Schema Validation", "Inference Optimization", "Python"],
     },
     {
       co: "Megaminds IT Services",
-      role: "Machine Learning",
+      role: "Data Science Developer Intern",
       date: "Internship",
-      impact: "Built ML components for fraud detection, including NER, model integration, and data workflows behind FastAPI endpoints.",
+      impact: "ML components for fraud detection, NER pipelines, and data workflows served behind FastAPI endpoints.",
       tech: ["Machine Learning", "NER", "Fraud Detection", "FastAPI", "Python", "SQL"],
     },
   ];
