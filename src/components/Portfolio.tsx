@@ -919,6 +919,14 @@ function Skills() {
 
 function RecognitionImage({ src, alt }: { src: string; alt: string }) {
   const [failed, setFailed] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const image = imageRef.current;
+    // Image errors can occur before hydration attaches the error handler.
+    if (image?.complete && image.naturalWidth === 0) setFailed(true);
+  }, []);
+
   return failed ? (
     <div className="recognition-fallback">
       <ShieldCheck size={28} />
@@ -926,6 +934,7 @@ function RecognitionImage({ src, alt }: { src: string; alt: string }) {
     </div>
   ) : (
     <img
+      ref={imageRef}
       src={src}
       alt={alt}
       loading="lazy"
