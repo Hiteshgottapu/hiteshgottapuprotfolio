@@ -78,21 +78,33 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Hitesh Gottapu — AI Systems Engineer" },
-      { name: "description", content: "Building production AI systems, LLM infrastructure, data engineering, AI safety, and enterprise AI applications." },
+      {
+        name: "description",
+        content:
+          "Building production AI systems, LLM infrastructure, data engineering, AI safety, and enterprise AI applications.",
+      },
       { name: "author", content: "Hitesh Gottapu" },
       { property: "og:title", content: "Hitesh Gottapu — AI Systems Engineer" },
-      { property: "og:description", content: "Building production AI systems, LLM infrastructure, and enterprise AI applications." },
+      {
+        property: "og:description",
+        content:
+          "Building production AI systems, LLM infrastructure, and enterprise AI applications.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Hitesh Gottapu — AI Systems Engineer" },
-      { name: "twitter:description", content: "Building production AI systems, LLM infrastructure, and enterprise AI applications." },
+      {
+        name: "twitter:description",
+        content:
+          "Building production AI systems, LLM infrastructure, and enterprise AI applications.",
+      },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       {
         rel: "icon",
         type: "image/svg+xml",
-        href: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0b14'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Inter,Arial,sans-serif' font-weight='700' font-size='32' fill='url(%23g)'%3EH%3C/text%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop offset='0' stop-color='%2306b6d4'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E",
+        href: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141512'/%3E%3Ctext x='50%25' y='64%25' text-anchor='middle' font-family='Arial,sans-serif' font-weight='700' font-size='38' fill='%23c5f278'%3Eh.%3C/text%3E%3C/svg%3E",
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
