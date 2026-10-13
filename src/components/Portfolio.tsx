@@ -1,1160 +1,1162 @@
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
-  Brain, Cpu, Database, Cloud, Code2, Github, Linkedin, Mail, FileDown,
-  ArrowRight, Sparkles, Shield, Network, Zap, Box, Layers, GitBranch,
-  Terminal, ExternalLink, Calendar, Star, GitCommit, Award, FlaskConical,
-  Workflow, ChevronRight, FileText, BookOpen,
+  ArrowDown,
+  ArrowRight,
+  ArrowUpRight,
+  AudioLines,
+  Brain,
+  Check,
+  ChevronDown,
+  Cloud,
+  Code2,
+  Copy,
+  Database,
+  FileDown,
+  GitBranch,
+  Github,
+  Layers,
+  MapPin,
+  Menu,
+  ScanLine,
+  ShieldCheck,
+  X,
 } from "lucide-react";
-import ministerImg from "@/assets/minister-pemmasani.jpg.asset.json";
-import boardroomImg from "@/assets/miracle-boardroom.jpg.asset.json";
+import ministerImg from "@/assets/minister-pemmasani.jpg";
+import boardroomImg from "@/assets/miracle-boardroom.jpg";
 
-/* ============================================================================
- * Atoms / Primitives
- * ========================================================================== */
+const links = {
+  email: "hiteshgottapu@gmail.com",
+  github: "https://github.com/Hiteshgottapu",
+  linkedin: "https://www.linkedin.com/in/hitesh-gottapu/",
+  resume: "https://drive.google.com/file/d/1MkXXSoB_9CBG_1rlrRhZ_HNc79EQJxEa/view?usp=sharing",
+  whatsapp: "https://wa.me/918143506309",
+};
 
-function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) {
+const navigation = [
+  ["#projects", "Work"],
+  ["#about", "About"],
+  ["#experience", "Experience"],
+  ["#research", "Research"],
+] as const;
+
+function ExternalLink({
+  href,
+  children,
+  className,
+  label,
+  analyticsId,
+}: {
+  href: string;
+  children: ReactNode;
+  className?: string;
+  label?: string;
+  analyticsId?: string;
+}) {
   return (
-    <section id={id} className={`relative mx-auto w-full max-w-7xl px-6 py-32 md:px-10 ${className}`}>
-      {children}
-    </section>
-  );
-}
-
-function SectionLabel({ icon: Icon, children }: { icon: any; children: React.ReactNode }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      className="mb-4 inline-flex items-center gap-2 rounded-full glass px-4 py-1.5 text-xs uppercase tracking-[0.18em] text-muted-foreground"
-    >
-      <Icon className="h-3.5 w-3.5 text-accent" />
-      {children}
-    </motion.div>
-  );
-}
-
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <motion.h2
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="text-4xl font-semibold leading-[1.05] tracking-tight md:text-6xl text-gradient"
-    >
-      {children}
-    </motion.h2>
-  );
-}
-
-function MagneticButton({
-  children, variant = "primary", href, onClick, target, rel,
-}: { children: React.ReactNode; variant?: "primary" | "ghost" | "accent"; href?: string; onClick?: () => void; target?: string; rel?: string }) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const x = useSpring(0, { stiffness: 200, damping: 15 });
-  const y = useSpring(0, { stiffness: 200, damping: 15 });
-
-  function handleMove(e: React.MouseEvent) {
-    const el = ref.current; if (!el) return;
-    const r = el.getBoundingClientRect();
-    x.set((e.clientX - r.left - r.width / 2) * 0.25);
-    y.set((e.clientY - r.top - r.height / 2) * 0.25);
-  }
-  function handleLeave() { x.set(0); y.set(0); }
-
-  const base = "relative inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors";
-  const styles = {
-    primary: "text-white bg-gradient-to-r from-[var(--neon-blue)] to-[var(--neon-violet)] glow-violet hover:brightness-110",
-    accent: "text-[var(--background)] bg-[var(--neon-cyan)] glow-cyan hover:brightness-110",
-    ghost: "glass text-foreground hover:bg-white/5",
-  }[variant];
-
-  return (
-    <motion.a
-      ref={ref}
+    <a
       href={href}
-      onClick={onClick}
-      target={target}
-      rel={rel}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      style={{ x, y }}
-      className={`${base} ${styles}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+      aria-label={label}
+      data-analytics={analyticsId}
     >
       {children}
-    </motion.a>
+    </a>
   );
 }
 
-/* ============================================================================
- * Cursor glow
- * ========================================================================== */
-function CursorGlow() {
-  const x = useMotionValue(-200);
-  const y = useMotionValue(-200);
-  useEffect(() => {
-    const handler = (e: MouseEvent) => { x.set(e.clientX); y.set(e.clientY); };
-    window.addEventListener("mousemove", handler);
-    return () => window.removeEventListener("mousemove", handler);
-  }, [x, y]);
-  return (
-    <motion.div
-      aria-hidden
-      style={{ x, y }}
-      className="pointer-events-none fixed left-0 top-0 z-[1] h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-40 blur-3xl"
-    >
-      <div className="h-full w-full rounded-full"
-        style={{ background: "radial-gradient(circle, rgba(139,92,246,0.45), transparent 60%)" }} />
-    </motion.div>
-  );
-}
-
-/* ============================================================================
- * Navigation
- * ========================================================================== */
 function Nav() {
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const mobileNav = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    const h = () => setScrolled(window.scrollY > 20);
-    h(); window.addEventListener("scroll", h);
-    return () => window.removeEventListener("scroll", h);
-  }, []);
-  const links = [
-    { href: "#about", label: "About" },
-    { href: "#projects", label: "Projects" },
-    { href: "#principles", label: "Principles" },
-    { href: "#architecture", label: "Architecture" },
-    { href: "#skills", label: "Skills" },
-    { href: "#experience", label: "Experience" },
-    { href: "#research", label: "Research" },
-    { href: "#contact", label: "Contact" },
-  ];
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggle.current?.focus();
+      }
+    };
+    const closeOutside = (event: PointerEvent) => {
+      if (event.target instanceof Node && !mobileNav.current?.contains(event.target))
+        setOpen(false);
+    };
+    const closeOnDesktop = () => {
+      if (window.innerWidth >= 900) setOpen(false);
+    };
+    document.addEventListener("keydown", closeOnEscape);
+    document.addEventListener("pointerdown", closeOutside);
+    window.addEventListener("resize", closeOnDesktop);
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      document.removeEventListener("pointerdown", closeOutside);
+      window.removeEventListener("resize", closeOnDesktop);
+    };
+  }, [open]);
   return (
-    <motion.nav
-      initial={{ y: -40, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed left-1/2 top-4 z-50 -translate-x-1/2 transition-all duration-500 ${scrolled ? "w-[min(96%,920px)]" : "w-[min(96%,1100px)]"}`}
-    >
-      <div className="glass-strong flex items-center justify-between rounded-full px-4 py-2.5">
-        <a href="#top" className="flex items-center gap-2 px-2">
-          <div className="relative h-7 w-7">
-            <div className="absolute inset-0 rounded-md bg-gradient-to-br from-[var(--neon-blue)] to-[var(--neon-violet)] glow-blue" />
-            <div className="absolute inset-[3px] rounded-[5px] bg-background flex items-center justify-center">
-              <span className="text-[10px] font-bold text-gradient-primary">HG</span>
-            </div>
-          </div>
-          <span className="hidden text-sm font-semibold tracking-tight sm:block">Hitesh Gottapu</span>
+    <header className="site-header">
+      <nav className="page-width nav-inner" aria-label="Main navigation">
+        <a href="#top" className="wordmark" aria-label="Hitesh Gottapu, back to top">
+          <span className="monogram">
+            h<span>.</span>
+          </span>
+          <span>
+            Hitesh Gottapu<span className="wordmark-sub">AI Systems Engineer</span>
+          </span>
         </a>
-        <div className="hidden items-center gap-1 md:flex">
-          {links.map(l => (
-            <a key={l.href} href={l.href}
-              className="rounded-full px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground">
-              {l.label}
+        <div className="desktop-nav">
+          {navigation.map(([href, label]) => (
+            <a key={href} href={href}>
+              {label}
             </a>
           ))}
         </div>
-        <MagneticButton href="#contact" variant="primary">
-          <Sparkles className="h-3.5 w-3.5" /> Hire Me
-        </MagneticButton>
-      </div>
-    </motion.nav>
+        <a href="#contact" className="nav-contact">
+          Let’s talk
+          <ArrowUpRight size={16} />
+        </a>
+        <div className="mobile-nav" ref={mobileNav}>
+          <button
+            ref={toggle}
+            className="menu-toggle"
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+          <div id="mobile-navigation" className="mobile-menu" hidden={!open}>
+            {navigation.map(([href, label]) => (
+              <a key={href} href={href} onClick={() => setOpen(false)}>
+                {label}
+                <ArrowUpRight size={16} />
+              </a>
+            ))}
+            <a href="#skills" onClick={() => setOpen(false)}>
+              Toolkit
+              <ArrowUpRight size={16} />
+            </a>
+            <a href="#contact" onClick={() => setOpen(false)}>
+              Let’s talk
+              <ArrowUpRight size={16} />
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
   );
 }
 
-/* ============================================================================
- * HERO - 3D AI Core + neural network bg
- * ========================================================================== */
-function NeuralBackground() {
-  // Pre-computed deterministic nodes/edges
-  const nodes = Array.from({ length: 28 }, (_, i) => ({
-    cx: ((i * 137) % 1200),
-    cy: ((i * 211) % 700),
-    r: 1.5 + ((i * 13) % 3),
-  }));
+const orbitPaths = Array.from({ length: 32 }, (_, ring) => {
+  const angle = (ring / 32) * Math.PI * 2;
+  return Array.from({ length: 81 }, (_, step) => {
+    const turn = (step / 80) * Math.PI * 2;
+    const radius = 128 + 52 * Math.cos(turn);
+    const x = radius * Math.cos(angle),
+      y = radius * Math.sin(angle),
+      z = 52 * Math.sin(turn);
+    return `${(250 + x * 0.88 + y * 0.37).toFixed(2)},${(244 + y * 0.42 - x * 0.19 + z * 1.35).toFixed(2)}`;
+  }).join(" ");
+});
+
+function SystemSculpture() {
   return (
-    <div className="absolute inset-0 -z-10 overflow-hidden">
-      <div className="absolute inset-0 grid-bg" />
-      <svg viewBox="0 0 1200 700" className="absolute inset-0 h-full w-full opacity-60">
+    <div className="system-sculpture" aria-hidden="true">
+      <div className="sculpture-cross cross-one">+</div>
+      <div className="sculpture-cross cross-two">+</div>
+      <div className="sculpture-label sculpture-label-top">
+        <span />
+        SYSTEMS THINKING
+      </div>
+      <svg viewBox="0 0 500 480" className="orbit-art" fill="none">
         <defs>
-          <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#22D3EE" stopOpacity="1" />
-            <stop offset="100%" stopColor="#22D3EE" stopOpacity="0" />
-          </radialGradient>
-          <linearGradient id="edgeGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.1" />
+          <linearGradient
+            id="orbit-gradient"
+            x1="60"
+            y1="100"
+            x2="420"
+            y2="370"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#ddfba0" />
+            <stop offset=".45" stopColor="#a8c579" />
+            <stop offset="1" stopColor="#37442c" />
           </linearGradient>
+          <radialGradient id="orbit-halo">
+            <stop stopColor="#c5f278" stopOpacity=".08" />
+            <stop offset="1" stopColor="#c5f278" stopOpacity="0" />
+          </radialGradient>
         </defs>
-        {nodes.map((n, i) =>
-          nodes.slice(i + 1, i + 3).map((m, j) => (
-            <line key={`${i}-${j}`} x1={n.cx} y1={n.cy} x2={m.cx} y2={m.cy}
-              stroke="url(#edgeGrad)" strokeWidth="0.6" className="animate-dash" />
-          ))
-        )}
-        {nodes.map((n, i) => (
-          <g key={i}>
-            <circle cx={n.cx} cy={n.cy} r={n.r * 4} fill="url(#nodeGlow)" opacity="0.5" />
-            <circle cx={n.cx} cy={n.cy} r={n.r} fill="#22D3EE">
-              <animate attributeName="opacity" values="0.3;1;0.3" dur={`${3 + (i % 4)}s`} repeatCount="indefinite" />
-            </circle>
-          </g>
-        ))}
+        <circle cx="250" cy="244" r="230" fill="url(#orbit-halo)" />
+        <ellipse cx="250" cy="244" rx="219" ry="198" stroke="#34382e" strokeDasharray="2 8" />
+        <path d="M30 244H470M250 28V459" stroke="#292d25" strokeDasharray="3 7" />
+        <g className="orbit-mesh">
+          {orbitPaths.map((points, index) => (
+            <polyline
+              key={index}
+              points={points}
+              stroke="url(#orbit-gradient)"
+              strokeWidth=".8"
+              opacity=".85"
+            />
+          ))}
+          {Array.from({ length: 16 }, (_, index) => {
+            const turn = (index / 16) * Math.PI * 2,
+              radius = 128 + 52 * Math.cos(turn);
+            return (
+              <ellipse
+                key={index}
+                cx="250"
+                cy={244 + 52 * Math.sin(turn) * 1.35}
+                rx={radius * 0.955}
+                ry={radius * 0.461}
+                transform={`rotate(-8 250 ${244 + 52 * Math.sin(turn) * 1.35})`}
+                stroke="url(#orbit-gradient)"
+                strokeWidth=".65"
+                opacity=".6"
+              />
+            );
+          })}
+        </g>
+        <circle cx="250" cy="47" r="4" fill="#c5f278" />
+        <circle cx="460" cy="304" r="3" fill="#c5f278" />
+        <circle cx="46" cy="166" r="3" fill="#c5f278" />
+        <path d="M250 229v30M235 244h30" stroke="#c5f278" />
       </svg>
-      {/* floating particles */}
-      {Array.from({ length: 18 }).map((_, i) => (
-        <motion.span
-          key={i}
-          className="absolute h-1 w-1 rounded-full bg-white/60"
-          initial={{ x: `${(i * 53) % 100}%`, y: `${(i * 79) % 100}%`, opacity: 0 }}
-          animate={{ y: ["100%", "-10%"], opacity: [0, 1, 0] }}
-          transition={{ duration: 10 + (i % 6), repeat: Infinity, delay: i * 0.4, ease: "linear" }}
-        />
-      ))}
-    </div>
-  );
-}
-
-function AICore() {
-  return (
-    <div className="relative mx-auto h-[420px] w-[420px] max-w-full">
-      {/* outer ring */}
-      <div className="absolute inset-0 animate-spin-slower rounded-full border border-white/10" />
-      <div className="absolute inset-6 animate-spin-slow rounded-full border border-white/10" />
-      <div className="absolute inset-12 animate-spin-slower rounded-full border border-dashed border-[var(--neon-cyan)]/30" />
-
-      {/* orbiting dots */}
-      {[0, 1, 2, 3, 4].map(i => (
-        <motion.div
-          key={i}
-          className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{
-            background: i % 2 ? "#22D3EE" : "#8B5CF6",
-            boxShadow: `0 0 20px ${i % 2 ? "#22D3EE" : "#8B5CF6"}`,
-          }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 12 + i * 3, repeat: Infinity, ease: "linear" }}
-          // orbit using transform-origin via offset
-        >
-          <div style={{ transform: `translateX(${140 + i * 18}px)` }} className="h-3 w-3" />
-        </motion.div>
-      ))}
-
-      {/* core */}
-      <div className="absolute inset-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-3xl glass-strong glow-violet animate-float-slow">
-        <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-[var(--neon-blue)]/30 via-transparent to-[var(--neon-violet)]/30" />
-        <div className="relative flex h-full w-full flex-col items-center justify-center gap-2">
-          <Cpu className="h-10 w-10 text-[var(--neon-cyan)]" />
-          <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">AI Systems</div>
-          <div className="text-xs font-mono text-[var(--neon-cyan)]">production</div>
-        </div>
-        {/* corner pins */}
-        {["top-0 left-0", "top-0 right-0", "bottom-0 left-0", "bottom-0 right-0"].map(p => (
-          <div key={p} className={`absolute ${p} h-2 w-2 m-1 rounded-full bg-[var(--neon-cyan)] glow-cyan`} />
-        ))}
+      <div className="sculpture-label sculpture-label-bottom">
+        <span className="tiny-square" />
+        FROM COMPLEXITY TO CLARITY
       </div>
-
-      {/* floating status indicators */}
-      <motion.div
-        animate={{ y: [0, -10, 0] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -left-6 top-10 rounded-xl glass px-3 py-2 text-[11px] font-mono"
-      >
-        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--neon-cyan)] glow-cyan mr-2" />
-        <span className="text-foreground">Production Ready</span>
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-4 bottom-12 w-44 rounded-xl glass p-3 text-[11px] font-mono space-y-1.5"
-      >
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-cyan)]" />
-          <span className="text-muted-foreground">FastAPI Services</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-violet)]" />
-          <span className="text-muted-foreground">LLM Pipelines</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--neon-blue)]" />
-          <span className="text-muted-foreground">Research Published</span>
-        </div>
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, -8, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-8 top-4 rounded-xl glass px-3 py-2 text-[10px] font-mono text-[var(--neon-violet)]"
-      >
-        ● Systems Online
-      </motion.div>
+      <span className="sculpture-coordinate">01 / COMPUTATIONAL FORM</span>
     </div>
   );
 }
 
 function Hero() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-
-  const metrics = [
-    { label: "Production AI Systems", value: "4" },
-    { label: "Hackathon Winner", value: "5×" },
-    { label: "Published Research", value: "ICAML 2025" },
-    { label: "AI & Data Science", value: "Internships" },
-  ];
-
   return (
-    <div id="top" ref={ref} className="relative min-h-screen pt-32">
-      <NeuralBackground />
-      <motion.div style={{ y, opacity }} className="relative mx-auto grid max-w-7xl gap-12 px-6 md:px-10 lg:grid-cols-[1.1fr_1fr] lg:gap-8">
-        <div className="flex flex-col justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
-            className="mb-6 inline-flex w-fit items-center gap-2 rounded-full glass px-4 py-1.5 text-xs font-mono"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--neon-cyan)] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--neon-cyan)]" />
-            </span>
-            Hyderabad, India · Available for AI Engineering roles
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-5xl font-semibold leading-[0.95] tracking-tight md:text-7xl lg:text-[5.5rem]"
-          >
-            <span className="text-gradient">Hitesh</span>{" "}
-            <span className="text-gradient-primary">Gottapu</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.25 }}
-            className="mt-3 text-xl font-medium text-foreground/90 md:text-2xl"
-          >
-            AI Engineer
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.35 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg"
-          >
-            Production AI systems · Backend engineering · Enterprise data engineering · LLM applications · AI infrastructure.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.45 }}
-            className="mt-10 flex flex-wrap gap-3"
-          >
-            <MagneticButton href="#projects" variant="primary">
-              View Projects <ArrowRight className="h-4 w-4" />
-            </MagneticButton>
-            <MagneticButton href="https://drive.google.com/file/d/1MkXXSoB_9CBG_1rlrRhZ_HNc79EQJxEa/view?usp=sharing" variant="ghost" target="_blank" rel="noreferrer">
-              <FileDown className="h-4 w-4" /> Resume
-            </MagneticButton>
-            <MagneticButton href="https://github.com/Hiteshgottapu" variant="ghost">
-              <Github className="h-4 w-4" /> GitHub
-            </MagneticButton>
-            <MagneticButton href="https://www.linkedin.com/in/hitesh-gottapu/" variant="ghost">
-              <Linkedin className="h-4 w-4" /> LinkedIn
-            </MagneticButton>
-            <MagneticButton href="#contact" variant="accent">
-              Hire Me
-            </MagneticButton>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-4"
-          >
-            {metrics.map(m => (
-              <div key={m.label} className="rounded-2xl glass p-4">
-                <div className="text-2xl font-semibold text-gradient-primary">{m.value}</div>
-                <div className="mt-1 text-[10px] uppercase tracking-wider text-muted-foreground">{m.label}</div>
-              </div>
-            ))}
-          </motion.div>
+    <section id="top" className="hero page-width" aria-labelledby="hero-title">
+      <div className="hero-grid">
+        <div className="hero-copy">
+          <p className="eyebrow">
+            <span className="accent-line" />
+            AI ENGINEER · HYDERABAD, INDIA
+          </p>
+          <h1 id="hero-title">
+            Intelligence.
+            <br />
+            <span>Engineered.</span>
+          </h1>
+          <p className="hero-description">
+            I’m Hitesh. I turn ambitious AI ideas into reliable systems — from the first data
+            pipeline to the last production endpoint.
+          </p>
+          <div className="hero-actions">
+            <a href="#projects" className="button button-primary">
+              Explore my work
+              <ArrowDown size={17} />
+            </a>
+            <ExternalLink href={links.resume} className="button button-secondary">
+              View résumé
+              <ArrowUpRight size={17} />
+            </ExternalLink>
+          </div>
+          <div className="hero-availability">
+            <span className="status-dot" />
+            Open to AI engineering opportunities
+          </div>
         </div>
+        <SystemSculpture />
+      </div>
+      <div className="hero-bottom">
+        <span className="mono">BUILT WITH INTENTION. SHIPPED WITH PRECISION.</span>
+        <a href="#projects">
+          SCROLL TO EXPLORE
+          <ArrowDown size={14} />
+        </a>
+      </div>
+      <div className="metrics">
+        <div>
+          <strong>04</strong>
+          <span>Production AI systems</span>
+        </div>
+        <div>
+          <strong>
+            05<span>×</span>
+          </strong>
+          <span>Hackathon winner</span>
+        </div>
+        <div>
+          <strong>01</strong>
+          <span>Research publication</span>
+        </div>
+        <div>
+          <strong className="metric-text">
+            End-to-end
+            <ArrowUpRight size={22} />
+          </strong>
+          <span>From architecture to deployment</span>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="relative flex items-center justify-center"
-        >
-          <AICore />
-        </motion.div>
-      </motion.div>
-
-      {/* scroll cue */}
-      <motion.div
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-[0.3em] text-muted-foreground"
-      >
-        scroll ↓
-      </motion.div>
+function SectionHeader({
+  number,
+  label,
+  title,
+  children,
+}: {
+  number: string;
+  label: string;
+  title: ReactNode;
+  children?: ReactNode;
+}) {
+  return (
+    <div className="section-header">
+      <div>
+        <p className="eyebrow">
+          <span className="section-number">{number}</span>
+          {label}
+        </p>
+        <h2>{title}</h2>
+      </div>
+      {children && <p className="section-description">{children}</p>}
     </div>
   );
 }
 
-/* ============================================================================
- * ABOUT - timeline
- * ========================================================================== */
-function About() {
-  const items = [
-    { year: "ICAML 2025", title: "Published Research", subtitle: "Peer-reviewed paper on applied AI systems.", icon: FlaskConical },
-    { year: "5×", title: "Hackathon Winner", subtitle: "Applied AI under tight constraints and shipping pressure.", icon: Award },
-    { year: "Now", title: "NeuzenAI — AI / Data Science Engineer Intern", subtitle: "Production AI pipelines, LLM evaluation, schema validation, FastAPI services, inference optimization.", icon: Brain },
-    { year: "Past", title: "Megaminds IT Services — Data Science Developer Intern", subtitle: "ML, NER, FastAPI, fraud detection workflows, Python, SQL.", icon: Database },
-    { year: "Edu", title: "B.Tech — AI & Data Science", subtitle: "Foundations across ML, systems, and data engineering.", icon: Code2 },
-  ];
-  return (
-    <Section id="about">
-      <SectionLabel icon={Brain}>About</SectionLabel>
-      <SectionHeading>
-        Engineering AI systems that<br />ship to production.
-      </SectionHeading>
-      <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-        I design and ship production AI systems — backend services, enterprise data platforms,
-        and LLM applications wired for reliability and scale. I focus on system design,
-        evaluation, and the engineering decisions that make AI actually work in production.
-      </p>
-
-      <div className="relative mt-20">
-        <div className="absolute left-4 top-0 h-full w-px bg-gradient-to-b from-transparent via-[var(--neon-violet)]/60 to-transparent md:left-1/2" />
-        <div className="space-y-10">
-          {items.map((it, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: i % 2 ? 30 : -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className={`relative md:grid md:grid-cols-2 md:gap-12 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}
-            >
-              <div className={`relative pl-12 md:pl-0 ${i % 2 ? "md:pl-12" : "md:pr-12 md:text-right"}`}>
-                <div className="absolute left-2 top-3 h-4 w-4 -translate-x-1/2 rounded-full bg-gradient-to-br from-[var(--neon-blue)] to-[var(--neon-violet)] glow-violet md:left-1/2" />
-                <div className="glass rounded-2xl p-6">
-                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[var(--neon-cyan)]">
-                    <it.icon className="h-4 w-4" />
-                    {it.year}
-                  </div>
-                  <h3 className="mt-2 text-xl font-semibold">{it.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground">{it.subtitle}</p>
-                </div>
-              </div>
-              <div />
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-/* ============================================================================
- * PROJECTS - holographic tilt cards
- * ========================================================================== */
-type ProjectAction = {
-  label: string; href: string; icon: any;
-  tooltip: string; analyticsId: string;
-};
-
 type Project = {
-  name: string; tagline: string; icon: any;
-  stack: string[]; description: string;
-  challenges: string; results: string;
-  accent: string;
-  actions: ProjectAction[];
+  id: string;
+  name: string;
+  category: "Data engineering" | "LLM engineering";
+  tagline: string;
+  description: string;
+  stack: string[];
+  challenge: string;
+  outcome: string;
+  github: string;
+  docs: string;
+  docsLabel: string;
+  analyticsId: string;
 };
 
-function ProjectActionButton({
-  href, icon: Icon, label, tooltip, analyticsId,
-}: {
-  href: string; icon: any; label: string; tooltip: string; analyticsId: string;
-}) {
+const projects: Project[] = [
+  {
+    id: "flux",
+    name: "FluxAI",
+    category: "Data engineering",
+    tagline: "Enterprise marketing intelligence",
+    description:
+      "Turning fragmented marketing data into governed, AI-ready datasets. A multi-tenant platform built at NeuzenAI.",
+    stack: ["FastAPI", "Snowflake", "AWS", "OAuth 2.0", "Medallion", "Multi-tenant"],
+    challenge:
+      "Multi-tenant ingestion with strict isolation, schema drift handling, and a clean bronze → silver → gold lineage.",
+    outcome:
+      "Backend and data engineering platform exposing governed, AI-ready datasets through FastAPI APIs.",
+    github: "https://github.com/Hiteshgottapu/FluxAI",
+    docs: "https://www.notion.so/FluxAI-System-Architecture-My-Contributions-2f9cd2cd103c804f9da6f71c339803cc",
+    docsLabel: "View architecture",
+    analyticsId: "fluxai",
+  },
+  {
+    id: "medscript",
+    name: "MedScript",
+    category: "LLM engineering",
+    tagline: "Healthcare, made understandable",
+    description:
+      "From handwritten prescriptions to structured medical records and patient-friendly guidance. One connected AI pipeline.",
+    stack: ["OCR", "Clinical NER", "Vector Search", "Gemini", "FastAPI", "Patient UX"],
+    challenge:
+      "Robust OCR on noisy clinical scans, drug-name disambiguation, structured record extraction, and safe routing of model outputs.",
+    outcome:
+      "An end-to-end clinical workflow from image upload to structured, patient-friendly guidance.",
+    github: "https://github.com/Hiteshgottapu/Medscript",
+    docs: "https://www.notion.so/MedScript-AI-Powered-Prescription-Intelligence-Platform-2fecd2cd103c80149534df7851f45c4a",
+    docsLabel: "Technical documentation",
+    analyticsId: "medscript",
+  },
+  {
+    id: "brahmo",
+    name: "Brahmo",
+    category: "LLM engineering",
+    tagline: "Trust is an engineering problem",
+    description:
+      "A legal AI safety engine that pairs retrieval with a deterministic verifier. Every citation has to earn its place.",
+    stack: ["FastAPI", "pgvector", "RAG", "Citation Verification", "AI Safety", "Dual-loop"],
+    challenge:
+      "Designing a non-LLM verification loop that catches unsupported citations without sacrificing response quality.",
+    outcome:
+      "Designed to minimize hallucinations through deterministic validation, with grounded refusals when sources do not support the claim.",
+    github: "https://github.com/Hiteshgottapu/brahmo-citation-safety",
+    docs: "https://app.notion.com/p/BRAHMO-PLATFORM-ENTERPRISE-ARCHITECTURE-093c16e3e87d4052b8fe851395e2bcf2",
+    docsLabel: "Enterprise architecture",
+    analyticsId: "brahmo",
+  },
+  {
+    id: "qlora",
+    name: "QLoRA Fine-Tuning",
+    category: "LLM engineering",
+    tagline: "Small footprint. Focused intelligence.",
+    description:
+      "Adapting Qwen2.5-1.5B for coding Q&A with parameter-efficient fine-tuning, 4-bit quantization, and disciplined evaluation.",
+    stack: ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "CodeAlpaca", "Eval Pipeline"],
+    challenge:
+      "Memory-efficient training on commodity GPUs and disciplined evaluation across capability and regression axes.",
+    outcome:
+      "0.28% trainable parameters, 4-bit NF4 quantization, and a reproducible PEFT pipeline with an evaluation harness.",
+    github:
+      "https://github.com/Hiteshgottapu/Domain-Adapting-Qwen2.5-1.5B-for-Coding-Q-A-Using-QLoRA",
+    docs: "https://github.com/Hiteshgottapu/Domain-Adapting-Qwen2.5-1.5B-for-Coding-Q-A-Using-QLoRA",
+    docsLabel: "Technical documentation",
+    analyticsId: "qlora",
+  },
+];
+
+function ProjectVisual({ id }: { id: string }) {
   return (
-    <motion.a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={tooltip}
-      data-analytics={analyticsId}
-      whileHover={{ y: -2 }}
-      whileTap={{ scale: 0.98 }}
-      className="group/btn relative inline-flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-gradient-to-b from-white/[0.06] to-white/[0.02] px-4 py-2.5 text-xs font-medium text-foreground backdrop-blur-md transition-all duration-300 hover:border-[var(--neon-cyan)]/30 hover:shadow-[0_0_20px_-4px_rgba(34,211,238,0.25)] sm:w-auto"
-    >
-      <Icon className="h-4 w-4 text-muted-foreground transition-all duration-300 group-hover/btn:scale-110 group-hover/btn:text-[var(--neon-cyan)]" />
-      <span className="transition-colors duration-300 group-hover/btn:text-[var(--neon-cyan)]">{label}</span>
-
-      {/* Tooltip */}
-      <span className="pointer-events-none absolute -top-9 left-1/2 z-20 w-max max-w-[220px] -translate-x-1/2 rounded-md bg-[var(--card)] px-2.5 py-1.5 text-[10px] font-medium text-foreground opacity-0 shadow-lg ring-1 ring-white/10 transition-opacity duration-200 group-hover/btn:opacity-100">
-        {tooltip}
-        <span className="absolute left-1/2 top-full -translate-x-1/2 border-[4px] border-transparent border-t-[var(--card)]" />
-      </span>
-    </motion.a>
-  );
-}
-
-function ProjectCard({ p, i }: { p: Project; i: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const rx = useSpring(0, { stiffness: 120, damping: 12 });
-  const ry = useSpring(0, { stiffness: 120, damping: 12 });
-
-  function handleMove(e: React.MouseEvent) {
-    const el = ref.current; if (!el) return;
-    const r = el.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width - 0.5;
-    const py = (e.clientY - r.top) / r.height - 0.5;
-    ry.set(px * 10); rx.set(-py * 10);
-  }
-  function handleLeave() { rx.set(0); ry.set(0); }
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.8, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-      style={{ rotateX: rx, rotateY: ry, transformPerspective: 1000 }}
-      className="group relative"
-    >
-      <div className="absolute -inset-px rounded-3xl bg-gradient-to-br opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{ background: `linear-gradient(135deg, ${p.accent}, transparent)` }} />
-      <div className="relative h-full overflow-hidden rounded-3xl glass-strong p-8 transition-shadow duration-500 group-hover:shadow-[0_30px_80px_-20px_rgba(139,92,246,0.4)]">
-        {/* corner glow */}
-        <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-30 blur-3xl transition-opacity group-hover:opacity-60"
-          style={{ background: p.accent }} />
-
-        <div className="flex items-start justify-between">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl glass">
-            <p.icon className="h-7 w-7" style={{ color: p.accent }} />
-          </div>
-        </div>
-
-        <h3 className="mt-6 text-2xl font-semibold tracking-tight">{p.name}</h3>
-        <p className="mt-1 text-sm text-[var(--neon-cyan)] font-mono">{p.tagline}</p>
-        <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.description}</p>
-
-        {/* mini architecture flow */}
-        <div className="mt-6 flex flex-wrap items-center gap-1.5">
-          {p.stack.slice(0, 6).map((s, idx) => (
-            <span key={s} className="flex items-center gap-1.5">
-              <span className="rounded-md bg-white/5 px-2 py-1 text-[10px] font-mono text-muted-foreground border border-white/5">{s}</span>
-              {idx < Math.min(p.stack.length, 6) - 1 && <ChevronRight className="h-3 w-3 text-white/20" />}
-            </span>
-          ))}
-        </div>
-
-        <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/5 pt-6">
-          <div>
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Challenge</div>
-            <div className="mt-1 text-xs leading-relaxed">{p.challenges}</div>
-          </div>
-          <div>
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Result</div>
-            <div className="mt-1 text-xs leading-relaxed">{p.results}</div>
-          </div>
-        </div>
-
-        {/* Action buttons */}
-        <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
-          {p.actions.map(a => (
-            <ProjectActionButton key={a.label} {...a} />
-          ))}
-        </div>
+    <div className={`project-visual visual-${id}`} aria-hidden="true">
+      <div className="visual-heading">
+        <span>
+          <span className="tiny-square" />
+          {id === "flux"
+            ? "DATA ORCHESTRATION"
+            : id === "medscript"
+              ? "DOCUMENT INTELLIGENCE"
+              : id === "brahmo"
+                ? "CITATION SAFETY"
+                : "PARAMETER-EFFICIENT TRAINING"}
+        </span>
+        <span>SCHEMATIC ↗</span>
       </div>
-    </motion.div>
+      {id === "flux" && (
+        <div className="pipeline-visual">
+          <div className="data-sources">
+            <span>
+              <Database size={13} />
+              PAID ADS
+            </span>
+            <span>
+              <AudioLines size={13} />
+              ORGANIC
+            </span>
+            <span>
+              <Layers size={13} />
+              CRM DATA
+            </span>
+          </div>
+          <div className="pipeline-connector">
+            <i />
+            <i />
+            <i />
+          </div>
+          <div className="pipeline-core">
+            <GitBranch size={22} />
+            <span>
+              FluxAI<small>INGEST · VALIDATE · TRANSFORM</small>
+            </span>
+          </div>
+          <div className="medallion-layers">
+            <span>BRONZE</span>
+            <ArrowRight size={12} />
+            <span>SILVER</span>
+            <ArrowRight size={12} />
+            <span>GOLD</span>
+          </div>
+        </div>
+      )}
+      {id === "medscript" && (
+        <div className="document-visual">
+          <div className="prescription">
+            <span className="rx">Rx</span>
+            <span className="document-line long" />
+            <span className="document-line" />
+            <span className="document-line medium" />
+            <span className="document-line long" />
+            <span className="scan-band" />
+            <span className="document-footer">PRESCRIPTION INPUT</span>
+          </div>
+          <div className="document-arrow">
+            <ScanLine size={24} />
+            <ArrowRight size={18} />
+          </div>
+          <div className="record-output">
+            <span className="record-title">
+              <Check size={13} />
+              STRUCTURED RECORD
+            </span>
+            <code>
+              {"{"}
+              <br />
+              &nbsp; "entities": [...],
+              <br />
+              &nbsp; "records": [...],
+              <br />
+              &nbsp; "context": "retrieved"
+              <br />
+              {"}"}
+            </code>
+            <span className="record-caption">OCR → NER → RAG</span>
+          </div>
+        </div>
+      )}
+      {id === "brahmo" && (
+        <div className="verification-visual">
+          <div className="verification-shield">
+            <ShieldCheck size={42} strokeWidth={1} />
+          </div>
+          <div className="verification-flow">
+            <span>GENERATE</span>
+            <span className="verification-bridge">↔</span>
+            <span>VERIFY</span>
+          </div>
+          <div className="verification-checks">
+            <span>
+              <Check size={13} />
+              Source retrieval
+            </span>
+            <span>
+              <Check size={13} />
+              Citation validation
+            </span>
+            <span>
+              <Check size={13} />
+              Grounded output
+            </span>
+          </div>
+        </div>
+      )}
+      {id === "qlora" && (
+        <div className="qlora-visual">
+          <div className="parameter-grid">
+            {Array.from({ length: 96 }, (_, i) => (
+              <i key={i} className={i === 29 || i === 54 || i === 78 ? "parameter-active" : ""} />
+            ))}
+          </div>
+          <div className="parameter-stat">
+            <strong>
+              0.28<span>%</span>
+            </strong>
+            <span>TRAINABLE PARAMETERS</span>
+            <small>
+              <span />
+              4-BIT NF4 · QWEN2.5-1.5B
+            </small>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
 function Projects() {
-  const projects: Project[] = [
-    {
-      name: "FluxAI", tagline: "Enterprise Marketing Intelligence Platform · Built at NeuzenAI", icon: Workflow,
-      stack: ["OAuth 2.0", "FastAPI", "AWS", "Snowflake", "Medallion", "Multi-tenant"],
-      description: "Multi-tenant data engineering platform unifying paid, organic, and CRM sources into AI-ready datasets on a medallion architecture, with OAuth 2.0 secured ingestion and FastAPI services.",
-      challenges: "Multi-tenant ingestion with strict isolation, schema drift handling, and a clean bronze → silver → gold lineage.",
-      results: "Backend + data engineering platform exposing governed, AI-ready datasets through FastAPI APIs.",
-      accent: "#3B82F6",
-      actions: [
-        { label: "View Architecture", href: "https://www.notion.so/FluxAI-System-Architecture-My-Contributions-2f9cd2cd103c804f9da6f71c339803cc", icon: Layers, tooltip: "Explore the complete enterprise architecture, OAuth 2.0 pipeline, Medallion data architecture, AWS infrastructure, and my engineering contributions.", analyticsId: "project_fluxai_architecture" },
-        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/FluxAI", icon: Github, tooltip: "View the complete source code, API implementation, and data pipeline configuration.", analyticsId: "project_fluxai_github" },
-      ],
-    },
-    {
-      name: "Brahmo", tagline: "Legal AI Safety Engine", icon: Shield,
-      stack: ["FastAPI", "pgvector", "RAG", "Citation Verification", "AI Safety", "Dual-loop"],
-      description: "Dual-loop architecture pairing retrieval with a deterministic verifier that grounds every legal claim before it leaves the model.",
-      challenges: "Designing a non-LLM verification loop that catches unsupported citations without sacrificing response quality.",
-      results: "Designed to minimize hallucinations through deterministic validation, with grounded refusals when sources do not support the claim.",
-      accent: "#8B5CF6",
-      actions: [
-        { label: "Enterprise Architecture", href: "https://app.notion.com/p/BRAHMO-PLATFORM-ENTERPRISE-ARCHITECTURE-093c16e3e87d4052b8fe851395e2bcf2", icon: Layers, tooltip: "Explore the deterministic legal AI safety engine, citation verification workflow, dual-loop architecture, caching strategy, and production backend.", analyticsId: "project_brahmo_architecture" },
-        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/brahmo-citation-safety", icon: Github, tooltip: "View the source code for the citation safety engine, dual-loop verifier, and RAG backend.", analyticsId: "project_brahmo_github" },
-      ],
-    },
-    {
-      name: "MedScript", tagline: "Healthcare AI Platform", icon: FlaskConical,
-      stack: ["OCR", "Clinical NER", "Vector Search", "Gemini", "FastAPI", "Patient UX"],
-      description: "Prescription image → OCR → clinical entity extraction → structured medical records → vector search → LLM → patient-friendly response. A full production pipeline, not a single model call.",
-      challenges: "Robust OCR on noisy clinical scans, drug-name disambiguation, structured record extraction, and safe routing of model outputs.",
-      results: "End-to-end clinical workflow from image upload to structured, patient-friendly guidance.",
-      accent: "#22D3EE",
-      actions: [
-        { label: "View Technical Documentation", href: "https://www.notion.so/MedScript-AI-Powered-Prescription-Intelligence-Platform-2fecd2cd103c80149534df7851f45c4a", icon: FileText, tooltip: "Read the complete healthcare AI architecture including OCR pipeline, clinical entity extraction, vector retrieval, RAG workflow, and backend design.", analyticsId: "project_medscript_docs" },
-        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/Medscript", icon: Github, tooltip: "View the source code for the prescription intelligence pipeline, OCR integration, and clinical NER modules.", analyticsId: "project_medscript_github" },
-      ],
-    },
-    {
-      name: "QLoRA Fine-Tuning", tagline: "LLM Engineering", icon: Zap,
-      stack: ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "CodeAlpaca", "Eval Pipeline"],
-      description: "Parameter-efficient fine-tuning of Qwen2.5 on CodeAlpaca with 4-bit NF4 quantization, PEFT adapters, and a structured evaluation pipeline.",
-      challenges: "Memory-efficient training on commodity GPUs and disciplined evaluation across capability and regression axes.",
-      results: "0.28% trainable parameters · 4-bit NF4 quantization · reproducible PEFT pipeline with eval harness.",
-      accent: "#3B82F6",
-      actions: [
-        { label: "GitHub Repository", href: "https://github.com/Hiteshgottapu/Domain-Adapting-Qwen2.5-1.5B-for-Coding-Q-A-Using-QLoRA", icon: Github, tooltip: "View the complete implementation of QLoRA fine-tuning, PEFT, 4-bit quantization, evaluation pipeline, training configuration, and experimental results.", analyticsId: "project_qlora_github" },
-        { label: "Technical Documentation", href: "https://github.com/Hiteshgottapu/Domain-Adapting-Qwen2.5-1.5B-for-Coding-Q-A-Using-QLoRA", icon: BookOpen, tooltip: "Open technical documentation", analyticsId: "project_qlora_docs" },
-      ],
-    },
-  ];
-
-  return (
-    <Section id="projects">
-      <SectionLabel icon={Sparkles}>Featured Projects</SectionLabel>
-      <div className="flex items-end justify-between gap-8 flex-wrap">
-        <SectionHeading>Production systems,<br />not demos.</SectionHeading>
-        <p className="max-w-md text-sm text-muted-foreground">
-          A selection of AI systems I've architected and shipped. Each ships with evals, observability, and an opinion.
-        </p>
-      </div>
-      <div className="mt-16 grid gap-6 md:grid-cols-2">
-        {projects.map((p, i) => <ProjectCard key={p.name} p={p} i={i} />)}
-      </div>
-    </Section>
+  const [filter, setFilter] = useState("All work");
+  const visible = projects.filter(
+    (project) => filter === "All work" || project.category === filter,
   );
-}
-
-/* ============================================================================
- * ENGINEERING PRINCIPLES
- * ========================================================================== */
-function Principles() {
-  const cards = [
-    {
-      title: "Reliability", icon: Shield, accent: "#22D3EE",
-      desc: "Systems built with input validation, schema enforcement, graceful failure handling, and deterministic checks before model output reaches users.",
-    },
-    {
-      title: "Scalability", icon: Network, accent: "#3B82F6",
-      desc: "Async APIs, modular service boundaries, cloud-native deployment, and reusable components designed to grow with usage.",
-    },
-    {
-      title: "Observability", icon: FlaskConical, accent: "#8B5CF6",
-      desc: "Evaluation pipelines, structured logging, monitoring hooks, and reproducible runs so system behavior stays measurable over time.",
-    },
-  ];
   return (
-    <Section id="principles">
-      <SectionLabel icon={Sparkles}>Engineering Principles</SectionLabel>
-      <SectionHeading>How I build for<br />production.</SectionHeading>
-      <div className="mt-16 grid gap-6 md:grid-cols-3">
-        {cards.map((c, i) => (
-          <motion.div
-            key={c.title}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-            whileHover={{ y: -6 }}
-            className="group relative overflow-hidden rounded-3xl glass-strong p-7"
-          >
-            <div className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-30 blur-3xl transition-opacity group-hover:opacity-60"
-              style={{ background: c.accent }} />
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl glass">
-              <c.icon className="h-6 w-6" style={{ color: c.accent }} />
+    <section id="projects" className="section page-width" aria-labelledby="work-title">
+      <SectionHeader
+        number="01"
+        label="SELECTED WORK"
+        title={
+          <span id="work-title">
+            Not just models.
+            <br />
+            <span className="muted-heading">Complete systems.</span>
+          </span>
+        }
+      >
+        A selection of things I’ve built — where machine intelligence meets real-world engineering.
+      </SectionHeader>
+      <div className="work-toolbar">
+        <div className="project-filters" role="group" aria-label="Filter projects">
+          {["All work", "LLM engineering", "Data engineering"].map((category) => (
+            <button
+              key={category}
+              onClick={() => setFilter(category)}
+              aria-pressed={filter === category}
+              className={filter === category ? "filter-active" : ""}
+            >
+              {category}
+              <span>
+                {category === "All work"
+                  ? projects.length
+                  : projects.filter((p) => p.category === category).length}
+              </span>
+            </button>
+          ))}
+        </div>
+        <span className="mono work-count" aria-live="polite">
+          {String(visible.length).padStart(2, "0")} PROJECTS
+        </span>
+      </div>
+      <div className="project-grid">
+        {visible.map((project) => (
+          <article key={project.id} className="project-card">
+            <ProjectVisual id={project.id} />
+            <div className="project-content">
+              <div className="project-category">
+                <span>{project.category}</span>
+                <span>0{projects.indexOf(project) + 1}</span>
+              </div>
+              <h3>
+                {project.name}
+                <ArrowUpRight size={24} />
+              </h3>
+              <p className="project-tagline">{project.tagline}</p>
+              <p className="project-description">{project.description}</p>
+              <div className="tags">
+                {project.stack.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+              <details className="engineering-notes">
+                <summary>
+                  Engineering notes
+                  <ChevronDown size={14} />
+                </summary>
+                <div>
+                  <h4>The challenge</h4>
+                  <p>{project.challenge}</p>
+                  <h4>The outcome</h4>
+                  <p>{project.outcome}</p>
+                </div>
+              </details>
+              <div className="project-links">
+                <ExternalLink
+                  href={project.docs}
+                  analyticsId={`project_${project.analyticsId}_${project.id === "medscript" || project.id === "qlora" ? "docs" : "architecture"}`}
+                >
+                  {project.docsLabel}
+                  <ArrowUpRight size={15} />
+                </ExternalLink>
+                <ExternalLink
+                  href={project.github}
+                  label={`${project.name} GitHub repository`}
+                  analyticsId={`project_${project.analyticsId}_github`}
+                >
+                  <Github size={16} />
+                  Source code
+                </ExternalLink>
+              </div>
             </div>
-            <h3 className="mt-5 text-xl font-semibold">{c.title}</h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
-          </motion.div>
+          </article>
         ))}
       </div>
-    </Section>
+      <ExternalLink href={links.github} className="more-work">
+        There’s more in the repository.
+        <span>
+          Explore GitHub
+          <ArrowUpRight size={17} />
+        </span>
+      </ExternalLink>
+    </section>
   );
 }
 
-/* ============================================================================
- * ARCHITECTURE showcase
- * ========================================================================== */
-function Architecture() {
-  const nodes = [
-    { id: "ocr", label: "OCR", x: 60, y: 80 },
-    { id: "ner", label: "NER", x: 220, y: 80 },
-    { id: "emb", label: "Embeddings", x: 380, y: 80 },
-    { id: "vec", label: "Vector DB", x: 540, y: 80 },
-    { id: "rag", label: "RAG", x: 700, y: 80 },
-    { id: "llm", label: "Gemini", x: 860, y: 80 },
-    { id: "out", label: "Response", x: 1020, y: 80 },
-  ];
+function About() {
   return (
-    <Section id="architecture">
-      <SectionLabel icon={Network}>Architecture</SectionLabel>
-      <SectionHeading>Systems thinking,<br />wired end-to-end.</SectionHeading>
-
-      <motion.div
-        initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.9 }}
-        className="mt-16 overflow-x-auto rounded-3xl glass-strong p-10"
-      >
-        <svg viewBox="0 0 1100 220" className="min-w-[900px] w-full">
-          <defs>
-            <linearGradient id="flowGrad" x1="0" x2="1">
-              <stop offset="0%" stopColor="#3B82F6" />
-              <stop offset="50%" stopColor="#22D3EE" />
-              <stop offset="100%" stopColor="#8B5CF6" />
-            </linearGradient>
-          </defs>
-          {/* edges */}
-          {nodes.slice(0, -1).map((n, i) => {
-            const m = nodes[i + 1];
-            return (
-              <g key={n.id}>
-                <line x1={n.x + 50} y1={n.y + 20} x2={m.x - 10} y2={m.y + 20}
-                  stroke="url(#flowGrad)" strokeWidth="1.5" className="animate-dash" opacity="0.7" />
-                {/* moving dot */}
-                <circle r="3" fill="#22D3EE">
-                  <animateMotion dur={`${3 + i * 0.3}s`} repeatCount="indefinite"
-                    path={`M${n.x + 50},${n.y + 20} L${m.x - 10},${m.y + 20}`} />
-                </circle>
-              </g>
-            );
-          })}
-          {nodes.map((n, i) => (
-            <g key={n.id}>
-              <rect x={n.x - 10} y={n.y} width="80" height="40" rx="10"
-                fill="rgba(11,17,32,0.8)" stroke="rgba(255,255,255,0.1)" />
-              <text x={n.x + 30} y={n.y + 25} textAnchor="middle" fontSize="12" fill="#fff"
-                fontFamily="JetBrains Mono">{n.label}</text>
-              <circle cx={n.x + 30} cy={n.y - 8} r="3" fill={i % 2 ? "#8B5CF6" : "#22D3EE"}>
-                <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" begin={`${i * 0.2}s`} />
-              </circle>
-            </g>
-          ))}
-        </svg>
-
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+    <section id="about" className="section about-section" aria-labelledby="about-title">
+      <div className="page-width">
+        <SectionHeader
+          number="02"
+          label="A LITTLE ABOUT ME"
+          title={
+            <span id="about-title">
+              Curiosity is the input.
+              <br />
+              <span className="muted-heading">Impact is the output.</span>
+            </span>
+          }
+        />
+        <div className="about-grid">
+          <div className="about-statement">
+            <span className="about-spark">✳</span>
+            <p>
+              I care about the space between
+              <br />
+              <em>“it works”</em> and
+              <br />
+              <em>“it works in production.”</em>
+            </p>
+            <span className="mono">
+              <MapPin size={13} />
+              BASED IN HYDERABAD, INDIA
+            </span>
+          </div>
+          <div className="about-copy">
+            <p>
+              I’m an AI engineer working across backend services, enterprise data platforms, and LLM
+              applications. I build the infrastructure that turns a promising model into a
+              dependable product.
+            </p>
+            <p>
+              My approach is hands-on and end-to-end: understand the problem, design the system,
+              evaluate the trade-offs, and ship something that holds up in the real world.
+            </p>
+            <div className="about-facts">
+              <div>
+                <span className="mono">FOUNDATIONS</span>
+                <strong>B.Tech in AI & Data Science</strong>
+                <span>Seshadri Rao Gudlavalleru Engineering College</span>
+              </div>
+              <div>
+                <span className="mono">BEYOND THE CODE</span>
+                <strong>5× hackathon winner · GDG lead team</strong>
+                <span>Building, collaborating, and learning in public.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="principles" className="principles">
           {[
-            { title: "Ingestion", desc: "Streaming + batch, multi-tenant isolation, lineage tracking." },
-            { title: "Retrieval", desc: "Hybrid BM25 + dense, query rewriting, recursive context expansion." },
-            { title: "Safety", desc: "Citation verification, refusal policies, PII redaction." },
-          ].map(c => (
-            <div key={c.title} className="rounded-2xl bg-white/[0.02] p-5 border border-white/5">
-              <div className="text-xs font-mono uppercase tracking-widest text-[var(--neon-cyan)]">{c.title}</div>
-              <p className="mt-2 text-sm text-muted-foreground">{c.desc}</p>
+            {
+              icon: ShieldCheck,
+              title: "Reliability first",
+              description:
+                "Input validation, schema enforcement, and deterministic checks. Graceful failure is a feature, not an afterthought.",
+            },
+            {
+              icon: Layers,
+              title: "Designed to scale",
+              description:
+                "Async APIs, modular service boundaries, and cloud-native deployment. Build a foundation, not a workaround.",
+            },
+            {
+              icon: ScanLine,
+              title: "Make it observable",
+              description:
+                "Structured logs, evaluation pipelines, and reproducible runs. If you can’t measure it, you can’t improve it.",
+            },
+          ].map(({ icon: Icon, title, description }, index) => (
+            <div key={title}>
+              <div className="principle-top">
+                <Icon size={23} strokeWidth={1.4} />
+                <span className="mono">0{index + 1}</span>
+              </div>
+              <h3>{title}</h3>
+              <p>{description}</p>
             </div>
           ))}
         </div>
-      </motion.div>
-    </Section>
-  );
-}
-
-/* ============================================================================
- * SKILLS - tech matrix
- * ========================================================================== */
-function Skills() {
-  const categories: { name: string; icon: any; items: string[] }[] = [
-    { name: "AI Engineering", icon: Brain, items: [
-      "PyTorch", "Transformers", "scikit-learn", "Model Evaluation", "Schema Validation", "Inference Optimization",
-    ]},
-    { name: "LLM Engineering", icon: Sparkles, items: [
-      "OpenAI", "Anthropic", "Gemini", "Qwen2.5", "QLoRA", "PEFT", "BitsAndBytes", "RAG", "Citation Verification",
-    ]},
-    { name: "Backend", icon: Code2, items: [
-      "FastAPI", "Python", "Node.js", "PostgreSQL", "pgvector", "REST", "OAuth 2.0",
-    ]},
-    { name: "Cloud", icon: Cloud, items: [
-      "AWS", "S3", "EC2", "Lambda", "IAM",
-    ]},
-    { name: "Data Engineering", icon: Database, items: [
-      "Snowflake", "Medallion Architecture", "ETL", "SQL", "Multi-tenant Pipelines",
-    ]},
-    { name: "Computer Vision", icon: Layers, items: [
-      "OCR", "Clinical NER", "Image Preprocessing", "Document Understanding",
-    ]},
-    { name: "Infrastructure", icon: GitBranch, items: [
-      "Docker", "GitHub Actions", "Linux", "Observability", "Reliability",
-    ]},
-  ];
-  return (
-    <Section id="skills">
-      <SectionLabel icon={Box}>Technology Matrix</SectionLabel>
-      <SectionHeading>The full stack,<br />from kernels to UI.</SectionHeading>
-
-      <div className="mt-16 space-y-6">
-        {categories.map((c, idx) => (
-          <motion.div
-            key={c.name}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.6, delay: idx * 0.05 }}
-            className="grid items-center gap-6 rounded-2xl glass p-6 md:grid-cols-[220px_1fr]"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--neon-blue)]/20 to-[var(--neon-violet)]/20 border border-white/10">
-                <c.icon className="h-5 w-5 text-[var(--neon-cyan)]" />
-              </div>
-              <div>
-                <div className="text-sm font-semibold">{c.name}</div>
-                <div className="text-[10px] uppercase tracking-widest text-muted-foreground">{c.items.length} tools</div>
-              </div>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {c.items.map(it => (
-                <motion.div
-                  key={it}
-                  whileHover={{ y: -4, scale: 1.05 }}
-                  className="group relative cursor-default rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-xs transition-colors hover:border-[var(--neon-cyan)]/40 hover:bg-[var(--neon-cyan)]/10"
-                >
-                  {it}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        ))}
+        <div id="architecture" className="architecture-strip">
+          <span className="mono">THE SYSTEMS VIEW</span>
+          <div>
+            {["Ingest", "Transform", "Retrieve", "Generate", "Verify", "Serve"].map(
+              (stage, index) => (
+                <span key={stage}>
+                  {index > 0 && <ArrowRight size={13} />}
+                  <span>{stage}</span>
+                </span>
+              ),
+            )}
+          </div>
+          <p>Isolated ingestion. Grounded retrieval. Verified output.</p>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
-/* ============================================================================
- * EXPERIENCE timeline
- * ========================================================================== */
 function Experience() {
   const roles = [
     {
-      co: "NeuzenAI",
+      company: "NeuzenAI",
+      initials: "N",
       role: "AI / Data Science Engineer Intern",
-      date: "Internship",
-      impact: "Built and shipped FluxAI — an enterprise marketing intelligence platform with multi-tenant data pipelines, OAuth 2.0 secured ingestion, medallion architecture, and FastAPI services serving AI-ready datasets.",
-      tech: ["FastAPI", "OAuth 2.0", "Snowflake", "AWS", "Medallion Architecture", "Python"],
+      description:
+        "Built and shipped FluxAI: multi-tenant marketing data pipelines, OAuth-secured ingestion, medallion architecture, and FastAPI services serving AI-ready datasets.",
+      stack: ["Python", "FastAPI", "Snowflake", "AWS", "OAuth 2.0", "Medallion Architecture"],
     },
     {
-      co: "Megaminds IT Services",
+      company: "Megaminds IT Services",
+      initials: "M",
       role: "Data Science Developer Intern",
-      date: "Internship",
-      impact: "ML components for fraud detection, NER pipelines, and data workflows served behind FastAPI endpoints.",
-      tech: ["Machine Learning", "NER", "Fraud Detection", "FastAPI", "Python", "SQL"],
+      description:
+        "Developed machine learning components for fraud detection, entity extraction, and production data workflows served behind FastAPI endpoints.",
+      stack: ["Machine Learning", "NER", "Fraud Detection", "FastAPI", "Python", "SQL"],
     },
   ];
   return (
-    <Section id="experience">
-      <SectionLabel icon={Calendar}>Experience</SectionLabel>
-      <SectionHeading>Where I've shipped.</SectionHeading>
-      <div className="mt-16 grid gap-4 md:grid-cols-2">
-        {roles.map((r, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative overflow-hidden rounded-2xl glass-strong p-6 transition-transform hover:-translate-y-1"
-          >
-            <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-[var(--neon-violet)]/10 blur-3xl transition-opacity opacity-0 group-hover:opacity-100" />
-            <div className="flex items-start justify-between">
+    <section id="experience" className="section page-width" aria-labelledby="experience-title">
+      <SectionHeader
+        number="03"
+        label="EXPERIENCE"
+        title={
+          <span id="experience-title">
+            Learning by building.
+            <br />
+            <span className="muted-heading">Building for impact.</span>
+          </span>
+        }
+      >
+        Real teams. Real constraints. Engineering that moves beyond the notebook.
+      </SectionHeader>
+      <div className="experience-list">
+        {roles.map((role) => (
+          <article key={role.company} className="experience-row">
+            <div className="company">
+              <span className="company-icon">
+                {role.initials}
+                <span>↗</span>
+              </span>
               <div>
-                <div className="text-xs font-mono uppercase tracking-widest text-[var(--neon-cyan)]">{r.date}</div>
-                <h3 className="mt-1 text-xl font-semibold">{r.role}</h3>
-                <div className="text-sm text-muted-foreground">{r.co}</div>
-              </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl glass">
-                <Cpu className="h-4 w-4 text-[var(--neon-cyan)]" />
+                <h3>{role.company}</h3>
+                <span className="mono">INTERNSHIP</span>
               </div>
             </div>
-            <div className="mt-4 text-[10px] uppercase tracking-widest text-[var(--neon-cyan)]">Key Contributions</div>
-            <p className="mt-1 text-sm leading-relaxed">{r.impact}</p>
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {r.tech.map(t => (
-                <span key={t} className="rounded-md bg-white/5 px-2 py-0.5 text-[10px] font-mono text-muted-foreground">{t}</span>
-              ))}
+            <div className="role-content">
+              <h4>{role.role}</h4>
+              <p>{role.description}</p>
+              <div className="tags">
+                {role.stack.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
             </div>
-          </motion.div>
+          </article>
         ))}
       </div>
-    </Section>
+      <div className="resume-row">
+        <p>The full story, on one page.</p>
+        <ExternalLink href={links.resume}>
+          View my résumé
+          <FileDown size={17} />
+        </ExternalLink>
+      </div>
+    </section>
   );
 }
 
-/* ============================================================================
- * RESEARCH + GITHUB
- * ========================================================================== */
+const skillGroups = [
+  {
+    icon: Brain,
+    name: "AI engineering",
+    items: [
+      "PyTorch",
+      "Transformers",
+      "scikit-learn",
+      "Model Evaluation",
+      "Schema Validation",
+      "Inference Optimization",
+    ],
+  },
+  {
+    icon: Code2,
+    name: "LLM engineering",
+    items: [
+      "OpenAI",
+      "Anthropic",
+      "Gemini",
+      "Qwen2.5",
+      "QLoRA",
+      "PEFT",
+      "BitsAndBytes",
+      "RAG",
+      "Citation Verification",
+    ],
+  },
+  {
+    icon: GitBranch,
+    name: "Backend systems",
+    items: ["Python", "FastAPI", "Node.js", "PostgreSQL", "pgvector", "REST", "OAuth 2.0"],
+  },
+  {
+    icon: Database,
+    name: "Data engineering",
+    items: ["Snowflake", "Medallion Architecture", "ETL", "SQL", "Multi-tenant Pipelines"],
+  },
+  { icon: Cloud, name: "Cloud & deployment", items: ["AWS", "S3", "EC2", "Lambda", "IAM"] },
+  {
+    icon: ScanLine,
+    name: "Computer vision",
+    items: ["OCR", "Clinical NER", "Image Preprocessing", "Document Understanding"],
+  },
+  {
+    icon: Layers,
+    name: "Infrastructure",
+    items: ["Docker", "GitHub Actions", "Linux", "Observability", "Reliability"],
+  },
+];
+
+function Skills() {
+  return (
+    <section
+      id="skills"
+      className="section page-width skills-section"
+      aria-labelledby="skills-title"
+    >
+      <SectionHeader
+        number="04"
+        label="THE TOOLKIT"
+        title={
+          <span id="skills-title">
+            The right tools.
+            <br />
+            <span className="muted-heading">The whole picture.</span>
+          </span>
+        }
+      >
+        Across the stack, from raw data to reliable inference.
+      </SectionHeader>
+      <div className="skills-grid">
+        {skillGroups.map(({ icon: Icon, name, items }) => (
+          <div className="skill-group" key={name}>
+            <h3>
+              <Icon size={19} strokeWidth={1.5} />
+              {name}
+            </h3>
+            <p>{items.join(" · ")}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function RecognitionImage({ src, alt }: { src: string; alt: string }) {
+  const [failed, setFailed] = useState(false);
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const image = imageRef.current;
+    // Image errors can occur before hydration attaches the error handler.
+    if (image?.complete && image.naturalWidth === 0) setFailed(true);
+  }, []);
+
+  return failed ? (
+    <div className="recognition-fallback">
+      <ShieldCheck size={28} />
+      <span>{alt}</span>
+    </div>
+  ) : (
+    <img
+      ref={imageRef}
+      src={src}
+      alt={alt}
+      loading="lazy"
+      width="800"
+      height="450"
+      onError={() => setFailed(true)}
+    />
+  );
+}
+
 function Research() {
   return (
-    <Section id="research">
-      <SectionLabel icon={FlaskConical}>Research</SectionLabel>
-      <SectionHeading>Published, peer-reviewed.</SectionHeading>
-
-      <div className="mt-16 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8 }}
-          className="overflow-hidden rounded-3xl glass-strong p-8"
-        >
-          <div className="flex items-center gap-2">
-            <span className="rounded-full bg-[var(--neon-violet)]/15 px-3 py-1 text-[10px] font-mono uppercase tracking-widest text-[var(--neon-violet)]">ICAML 2025</span>
-            <span className="text-xs text-muted-foreground">Conference paper</span>
+    <section id="research" className="section page-width" aria-labelledby="research-title">
+      <SectionHeader
+        number="05"
+        label="RESEARCH & RECOGNITION"
+        title={
+          <span id="research-title">
+            Beyond the build.
+            <br />
+            <span className="muted-heading">Into the conversation.</span>
+          </span>
+        }
+      />
+      <article className="research-card">
+        <div className="paper-art" aria-hidden="true">
+          <div className="paper-cover">
+            <div className="paper-top">
+              ICAML<span>2025</span>
+            </div>
+            <div className="paper-mark">✳</div>
+            <strong>
+              Making code
+              <br />
+              quality
+              <br />
+              explainable.
+            </strong>
+            <span className="paper-foot">MACHINE LEARNING × SOFTWARE ENGINEERING</span>
           </div>
-          <h3 className="mt-4 text-2xl font-semibold leading-tight">
+        </div>
+        <div className="research-content">
+          <span className="research-badge">
+            <span className="status-dot" />
+            PEER-REVIEWED · ICAML 2025
+          </span>
+          <h3>
             Real-Time Code Quality Prediction with Explainable AI and Interactive Visualizations
           </h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            Streamlit-based framework that blends machine learning with XAI techniques (SHAP, LIME) for real-time software fault prediction. Features interactive defect heatmaps and actionable code quality recommendations.
+          <p>
+            A Streamlit framework combining machine learning with SHAP and LIME for software fault
+            prediction — with interactive defect heatmaps and actionable recommendations.
           </p>
-
-          <div className="mt-4 text-xs text-muted-foreground">
-            <span className="text-[var(--neon-cyan)] font-mono">Authors:</span> Gottapu Hitesh, Kodamala Bhanu, Banki Sambasiva, Dodda Rahul, Balla Manoj Venkata Sai
+          <p className="research-authors">
+            Gottapu Hitesh, Kodamala Bhanu, Banki Sambasiva, Dodda Rahul, Balla Manoj Venkata Sai
+            <br />
+            <span>Seshadri Rao Gudlavalleru Engineering College</span>
+          </p>
+          <ExternalLink
+            href="https://psou.ac.in/asset/docs/files/202505161524319c90724728.pdf"
+            className="text-link"
+          >
+            Read the proceedings
+            <ArrowUpRight size={17} />
+          </ExternalLink>
+        </div>
+      </article>
+      <div className="recognition-grid">
+        <figure>
+          <div className="recognition-photo">
+            <RecognitionImage
+              src={ministerImg}
+              alt="Hitesh presenting MedScript to Hon. Minister Dr. Chandra Sekhar Pemmasani"
+            />
           </div>
-          <div className="mt-1 text-xs text-muted-foreground">
-            <span className="text-[var(--neon-cyan)] font-mono">Institution:</span> Seshadri Rao Gudlavalleru Engineering College
+          <figcaption>
+            <span className="mono">MINISTERIAL RECOGNITION</span>
+            <h3>AI with real-world healthcare impact.</h3>
+            <p>
+              MedScript demonstrated to Hon. Minister Dr. Chandra Sekhar Pemmasani at the GDG
+              Solutions Challenge.
+            </p>
+          </figcaption>
+        </figure>
+        <figure>
+          <div className="recognition-photo">
+            <RecognitionImage
+              src={boardroomImg}
+              alt="Hitesh with executive leadership in the Miracle Software Systems boardroom"
+            />
           </div>
-
-          <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-            <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-              <div className="text-lg font-semibold text-gradient-primary">ICAML</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Venue</div>
-            </div>
-            <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-              <div className="text-lg font-semibold text-gradient-primary">2025</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Year</div>
-            </div>
-            <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-              <div className="text-lg font-semibold text-gradient-primary">XAI / SE</div>
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground">Track</div>
-            </div>
-          </div>
-
-          <div className="mt-6 flex gap-3">
-            <MagneticButton href="https://psou.ac.in/asset/docs/files/202505161524319c90724728.pdf" variant="primary" target="_blank" rel="noreferrer">
-              <FileDown className="h-4 w-4" /> View Proceedings PDF
-            </MagneticButton>
-          </div>
-        </motion.div>
-
-        {/* Recognition & Achievements gallery */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay: 0.1 }}
-          className="rounded-3xl glass-strong p-8"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Award className="h-5 w-5 text-[var(--neon-cyan)]" />
-              <span className="font-semibold">Recognition & Impact</span>
-            </div>
-            <span className="text-xs text-muted-foreground font-mono">real-world</span>
-          </div>
-
-          <div className="mt-6 space-y-4">
-            <motion.figure
-              whileHover={{ y: -3 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02]"
-            >
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <img
-                  src={ministerImg.url}
-                  alt="Hitesh Gottapu presenting MedScript to Hon. Minister Dr. Chandra Sekhar Pemmasani at the GDG Solutions Challenge"
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                <span className="absolute left-3 top-3 rounded-full bg-[var(--neon-violet)]/20 px-2.5 py-1 text-[9px] font-mono uppercase tracking-widest text-[var(--neon-violet)] backdrop-blur">
-                  Ministerial Recognition
-                </span>
-              </div>
-              <figcaption className="p-4">
-                <div className="text-sm font-semibold leading-tight">
-                  MedScript demoed to Hon. Minister Dr. Chandra Sekhar Pemmasani
-                </div>
-                <div className="mt-1 text-xs text-muted-foreground">
-                  GDG Solutions Challenge · Recognized for real-world healthcare AI impact in handwritten prescription recognition.
-                </div>
-              </figcaption>
-            </motion.figure>
-
-            <motion.figure
-              whileHover={{ y: -3 }}
-              className="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02]"
-            >
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <img
-                  src={boardroomImg.url}
-                  alt="Hitesh Gottapu with C-suite leadership in the Miracle Software Systems boardroom after presenting MedScript"
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-                <span className="absolute left-3 top-3 rounded-full bg-[var(--neon-cyan)]/20 px-2.5 py-1 text-[9px] font-mono uppercase tracking-widest text-[var(--neon-cyan)] backdrop-blur">
-                  C-Suite Presentation
-                </span>
-              </div>
-              <figcaption className="p-4">
-                <div className="text-sm font-semibold leading-tight">
-                  MedScript presented to C-suite at Miracle Software Systems
-                </div>
-                <div className="mt-1 text-xs text-muted-foreground">
-                  Boardroom review with executive leadership — production healthcare AI evaluated for enterprise deployment.
-                </div>
-              </figcaption>
-            </motion.figure>
-          </div>
-        </motion.div>
+          <figcaption>
+            <span className="mono">FROM THE DEMO TO THE BOARDROOM</span>
+            <h3>A seat at the enterprise table.</h3>
+            <p>
+              Presented MedScript to C-suite leadership at Miracle Software Systems for an
+              enterprise healthcare AI review.
+            </p>
+          </figcaption>
+        </figure>
       </div>
-    </Section>
+    </section>
   );
 }
 
-/* ============================================================================
- * CONTACT - terminal
- * ========================================================================== */
 function Contact() {
-  const [copied, setCopied] = useState(false);
-  const email = "hiteshgottapu@gmail.com";
-
-  const commands = [
-    { cmd: "email", desc: "open mail client", href: `mailto:${email}?subject=Reaching out from your portfolio` },
-    { cmd: "download_resume", desc: "fetch latest resume.pdf", href: "https://drive.google.com/file/d/1MkXXSoB_9CBG_1rlrRhZ_HNc79EQJxEa/view?usp=sharing" },
-    { cmd: "view_github", desc: "browse repositories", href: "https://github.com/Hiteshgottapu" },
-    { cmd: "open_linkedin", desc: "open professional profile", href: "https://www.linkedin.com/in/hitesh-gottapu/" },
-    { cmd: "whatsapp", desc: "message on WhatsApp", href: "https://wa.me/918143506309" },
-  ];
-
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "error">("idle");
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (timer.current) clearTimeout(timer.current);
+    },
+    [],
+  );
+  async function copyEmail() {
+    if (timer.current) clearTimeout(timer.current);
+    try {
+      await navigator.clipboard.writeText(links.email);
+      setCopyState("copied");
+    } catch {
+      setCopyState("error");
+    }
+    timer.current = setTimeout(() => setCopyState("idle"), 3500);
+  }
   return (
-    <Section id="contact">
-      <SectionLabel icon={Terminal}>Contact</SectionLabel>
-      <SectionHeading>Let's build something<br />that actually ships.</SectionHeading>
-
-      <motion.div
-        initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8 }}
-        className="mt-16 overflow-hidden rounded-3xl glass-strong"
-      >
-        <div className="flex items-center gap-2 border-b border-white/5 bg-black/30 px-4 py-3">
-          <span className="h-3 w-3 rounded-full bg-red-500/70" />
-          <span className="h-3 w-3 rounded-full bg-yellow-500/70" />
-          <span className="h-3 w-3 rounded-full bg-green-500/70" />
-          <span className="ml-3 text-xs font-mono text-muted-foreground">hitesh@aicore — bash</span>
+    <section id="contact" className="contact-section" aria-labelledby="contact-title">
+      <div className="page-width">
+        <div className="contact-top">
+          <p className="eyebrow">
+            <span className="section-number">06</span>WHAT’S NEXT?
+          </p>
+          <span className="contact-status">
+            <span className="status-dot" />
+            OPEN TO OPPORTUNITIES
+          </span>
         </div>
-        <div className="p-8 font-mono text-sm">
-          <div className="text-muted-foreground mb-4">
-            <span className="text-[var(--neon-violet)]">$</span> help
-            <div className="pl-4 text-xs mt-1">available commands — click to execute</div>
+        <h2 id="contact-title">
+          Let’s build
+          <br />
+          something <span>that matters.</span>
+          <ArrowUpRight className="contact-arrow" strokeWidth={1} />
+        </h2>
+        <div className="contact-bottom">
+          <div>
+            <p>
+              Have a problem worth solving? A team worth joining?
+              <br />
+              I’d love to hear about it.
+            </p>
+            <div className="email-row">
+              <a href={`mailto:${links.email}`}>
+                {links.email}
+                <ArrowUpRight size={21} />
+              </a>
+              <button onClick={copyEmail} aria-label="Copy email address" className="copy-button">
+                {copyState === "copied" ? <Check size={17} /> : <Copy size={17} />}
+              </button>
+            </div>
+            <span className="copy-status" role="status">
+              {copyState === "copied"
+                ? "Email copied."
+                : copyState === "error"
+                  ? "Couldn’t copy — select the email or use the link to get in touch."
+                  : ""}
+            </span>
           </div>
-          <div className="grid gap-2 md:grid-cols-2">
-            {commands.map((c, i) => (
-              <motion.a
-                key={c.cmd}
-                href={c.href}
-                target={c.href.startsWith("http") ? "_blank" : undefined}
-                rel="noreferrer"
-                onClick={c.cmd === "email" ? () => setCopied(true) : undefined}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.08, duration: 0.4 }}
-                whileHover={{ x: 4 }}
-                className="group flex items-center justify-between rounded-xl border border-white/5 bg-white/[0.02] px-4 py-3 transition-all hover:border-[var(--neon-cyan)]/40 hover:bg-[var(--neon-cyan)]/5"
-              >
-                <div className="flex items-baseline gap-3">
-                  <span className="text-[var(--neon-violet)]">$</span>
-                  <span className="text-foreground">{c.cmd}</span>
-                  <span className="text-[10px] text-muted-foreground hidden md:inline">— {c.desc}</span>
-                </div>
-                <ArrowRight className="h-4 w-4 text-muted-foreground transition-all group-hover:translate-x-1 group-hover:text-[var(--neon-cyan)]" />
-              </motion.a>
-            ))}
-          </div>
-          {copied && (
-            <motion.div
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="mt-4 text-xs text-[var(--neon-cyan)]"
-            >
-              Email copied to clipboard — ready to paste
-            </motion.div>
-          )}
-          <div className="mt-6 flex gap-2">
-            <span className="text-[var(--neon-violet)]">$</span>
-            <span className="text-foreground">_</span>
-            <span className="ml-[-4px] inline-block h-4 w-2 bg-[var(--neon-cyan)] animate-blink" />
+          <div className="contact-socials">
+            <ExternalLink href={links.linkedin}>
+              LinkedIn
+              <ArrowUpRight size={17} />
+            </ExternalLink>
+            <ExternalLink href={links.github}>
+              GitHub
+              <ArrowUpRight size={17} />
+            </ExternalLink>
+            <ExternalLink href={links.whatsapp}>
+              WhatsApp
+              <ArrowUpRight size={17} />
+            </ExternalLink>
+            <ExternalLink href={links.resume}>
+              Résumé
+              <FileDown size={17} />
+            </ExternalLink>
           </div>
         </div>
-      </motion.div>
-    </Section>
+      </div>
+    </section>
   );
 }
 
-/* ============================================================================
- * FOOTER
- * ========================================================================== */
 function Footer() {
   return (
-    <footer className="relative border-t border-white/5">
-      <div className="absolute inset-0 grid-bg opacity-50" />
-      <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-6 py-10 md:flex-row md:px-10">
-        <div className="flex items-center gap-3">
-          <div className="relative h-8 w-8">
-            <div className="absolute inset-0 rounded-md bg-gradient-to-br from-[var(--neon-blue)] to-[var(--neon-violet)] animate-pulse-glow glow-violet" />
-            <div className="absolute inset-[3px] rounded-[5px] bg-background flex items-center justify-center">
-              <Cpu className="h-3.5 w-3.5 text-[var(--neon-cyan)]" />
-            </div>
-          </div>
-          <div className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Hitesh Gottapu · Hyderabad, India
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <a href="https://github.com/Hiteshgottapu" target="_blank" rel="noreferrer" aria-label="GitHub profile" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
-            <Github className="h-4 w-4" />
-          </a>
-          <a href="https://www.linkedin.com/in/hitesh-gottapu/" target="_blank" rel="noreferrer" aria-label="LinkedIn profile" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
-            <Linkedin className="h-4 w-4" />
-          </a>
-          <a href="mailto:hiteshgottapu@gmail.com" aria-label="Email Hitesh" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
-            <Mail className="h-4 w-4" />
-          </a>
-          <a href="https://wa.me/918143506309" target="_blank" rel="noreferrer" aria-label="WhatsApp Hitesh" className="flex h-9 w-9 items-center justify-center rounded-full glass transition-colors hover:bg-white/10">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          </a>
-        </div>
-      </div>
+    <footer className="page-width footer">
+      <a href="#top" className="footer-name">
+        Hitesh Gottapu<span>© {new Date().getFullYear()}</span>
+      </a>
+      <span className="mono">THOUGHTFULLY ENGINEERED.</span>
+      <a href="#top">
+        Back to top
+        <ArrowUpRight size={15} />
+      </a>
     </footer>
   );
 }
 
-/* ============================================================================
- * ROOT EXPORT
- * ========================================================================== */
 export default function Portfolio() {
   return (
-    <main className="relative min-h-screen overflow-x-clip">
-      <CursorGlow />
+    <>
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <Nav />
-      <Hero />
-      <About />
-      <Projects />
-      <Principles />
-      <Architecture />
-      <Skills />
-      <Experience />
-      <Research />
-      <Contact />
+      <main id="main-content" tabIndex={-1}>
+        <Hero />
+        <Projects />
+        <About />
+        <Experience />
+        <Skills />
+        <Research />
+        <Contact />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }
